@@ -22,7 +22,15 @@ Le serveur Metro/JAX-WS lancé par GitHub Actions a **réellement servi** son WS
 | Style et transport | SOAP/HTTP, **document/literal** |
 | Opérations | `conversionEuroToDinar`, `getCompte`, `getComptes` |
 
-Les méthodes de l'interface Java déterminent les opérations du `portType` ; les `@WebParam` définissent les champs `montant` (`double`) et `code` (`long`) dans les requêtes. `getComptes` n'a pas de paramètre. Les réponses sont des structures JAXB : `conversionEuroToDinarResponse` contient un `return` numérique ; `getCompteResponse` contient le compte ; `getComptesResponse` contient des éléments `return` répétés (un par compte). Pour les types XSD exacts et leurs imports, consulter les fichiers XML générés dans [l'artifact de TP3](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117/artifacts/15010509898). Le code `Compte` correspond aux champs `code`, `solde` et `dateCreation` sérialisés en XML. Une extraction automatique détaillée des schémas est également prévue par le [script de vérification](../../tools/practical_http.py) afin de documenter les namespaces et les occurrences depuis le WSDL réel.
+Les méthodes de l'interface Java déterminent les opérations du `portType` ; les `@WebParam` définissent les champs `montant` et `code`. La lecture du **schéma XSD effectivement importé par le WSDL en CI** a donné les types suivants :
+
+| Opération | Paramètre de requête | Réponse (`return`) |
+| --- | --- | --- |
+| `conversionEuroToDinar` | `montant : xs:double` | `xs:double` |
+| `getCompte` | `code : xs:long` | `tns:compte`, facultatif (`minOccurs=0`) |
+| `getComptes` | aucun | `tns:compte`, répété (`minOccurs=0, maxOccurs=unbounded`) |
+
+Le type complexe `tns:compte` comprend `code : xs:long`, `solde : xs:double` et `dateCreation : xs:dateTime` (facultatif). Le namespace des éléments métier est `http://service.tp3.soa.iset.edu/` ; le binding utilise le style `document` et le transport `http://schemas.xmlsoap.org/soap/http`. Cette description provient des données `wsdl-inventory.json` produites par le [workflow d'intégration](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45599310144), et non d'une structure inventée. L'inventaire archivé dans [preuves/wsdl-inventory.json](preuves/wsdl-inventory.json) permet de contrôler les noms, types et occurrences sans dépendre de l'expiration des artifacts GitHub.
 
 ## Résultats observés (question 9)
 Les trois opérations ont reçu de **véritables réponses SOAP sur HTTP 200** depuis un serveur démarré dans GitHub Actions :

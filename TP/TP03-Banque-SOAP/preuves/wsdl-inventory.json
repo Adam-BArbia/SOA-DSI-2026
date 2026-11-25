@@ -1,0 +1,151 @@
+{
+  "provenance": {
+    "workflow": "https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45599310144",
+    "job": "TP3 - Live JAX-WS service and SOAP envelopes",
+    "source": "GENERATED_WSDL_INVENTORY in GitHub Actions log",
+    "nature": "derived from WSDL and imported XSD obtained from locally running Metro in CI",
+    "date": "2026-11-25"
+  },
+  "targetNamespace": "http://service.tp3.soa.iset.edu/",
+  "services": [
+    {
+      "name": "BanqueService",
+      "ports": [
+        {
+          "name": "BanqueServiceImplPort",
+          "binding": "tns:BanqueServiceImplPortBinding"
+        }
+      ]
+    }
+  ],
+  "portTypes": [
+    {
+      "name": "BanqueService",
+      "operations": [
+        {
+          "name": "conversionEuroToDinar",
+          "input": "tns:conversionEuroToDinar",
+          "output": "tns:conversionEuroToDinarResponse"
+        },
+        {
+          "name": "getCompte",
+          "input": "tns:getCompte",
+          "output": "tns:getCompteResponse"
+        },
+        {
+          "name": "getComptes",
+          "input": "tns:getComptes",
+          "output": "tns:getComptesResponse"
+        }
+      ]
+    }
+  ],
+  "bindings": [
+    {
+      "name": "BanqueServiceImplPortBinding",
+      "type": "tns:BanqueService",
+      "style": "document",
+      "transport": "http://schemas.xmlsoap.org/soap/http",
+      "operations": [
+        "conversionEuroToDinar",
+        "getCompte",
+        "getComptes"
+      ]
+    }
+  ],
+  "schemas": [
+    {
+      "origin": "embedded",
+      "targetNamespace": null,
+      "complexTypes": []
+    },
+    {
+      "origin": "import-1",
+      "targetNamespace": "http://service.tp3.soa.iset.edu/",
+      "complexTypes": [
+        {
+          "name": "getCompte",
+          "elements": [
+            {
+              "name": "code",
+              "type": "xs:long",
+              "minOccurs": null,
+              "maxOccurs": null
+            }
+          ]
+        },
+        {
+          "name": "getCompteResponse",
+          "elements": [
+            {
+              "name": "return",
+              "type": "tns:compte",
+              "minOccurs": "0",
+              "maxOccurs": null
+            }
+          ]
+        },
+        {
+          "name": "compte",
+          "elements": [
+            {
+              "name": "code",
+              "type": "xs:long",
+              "minOccurs": null,
+              "maxOccurs": null
+            },
+            {
+              "name": "solde",
+              "type": "xs:double",
+              "minOccurs": null,
+              "maxOccurs": null
+            },
+            {
+              "name": "dateCreation",
+              "type": "xs:dateTime",
+              "minOccurs": "0",
+              "maxOccurs": null
+            }
+          ]
+        },
+        {
+          "name": "getComptes",
+          "elements": []
+        },
+        {
+          "name": "getComptesResponse",
+          "elements": [
+            {
+              "name": "return",
+              "type": "tns:compte",
+              "minOccurs": "0",
+              "maxOccurs": "unbounded"
+            }
+          ]
+        },
+        {
+          "name": "conversionEuroToDinar",
+          "elements": [
+            {
+              "name": "montant",
+              "type": "xs:double",
+              "minOccurs": null,
+              "maxOccurs": null
+            }
+          ]
+        },
+        {
+          "name": "conversionEuroToDinarResponse",
+          "elements": [
+            {
+              "name": "return",
+              "type": "xs:double",
+              "minOccurs": null,
+              "maxOccurs": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
