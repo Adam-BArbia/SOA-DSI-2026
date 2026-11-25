@@ -1,0 +1,306 @@
+﻿{
+    "data":  {
+                 "productList":  [
+                                     {
+                                         "id":  "03645098-ad79-4af4-b78a-b67ec1c26e6e",
+                                         "name":  "Smartphone 10",
+                                         "price":  4043.072517239031,
+                                         "quantity":  79,
+                                         "category":  {
+                                                          "id":  "3",
+                                                          "name":  "Smartphone"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "1faae1db-0d1b-4147-bb52-7bb6a538aabe",
+                                         "name":  "Computer 5",
+                                         "price":  1943.9145670565283,
+                                         "quantity":  76,
+                                         "category":  {
+                                                          "id":  "1",
+                                                          "name":  "Computer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "3a35b355-0a6b-45c8-897f-a7352bda7a1f",
+                                         "name":  "Smartphone 9",
+                                         "price":  855.1577726437913,
+                                         "quantity":  9,
+                                         "category":  {
+                                                          "id":  "3",
+                                                          "name":  "Smartphone"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "3ce81ea5-f94c-4042-9ab5-783a5243d3df",
+                                         "name":  "Smartphone 2",
+                                         "price":  1197.625639279196,
+                                         "quantity":  94,
+                                         "category":  {
+                                                          "id":  "3",
+                                                          "name":  "Smartphone"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "49f579f7-f261-4178-ba3d-144c608250a3",
+                                         "name":  "Computer 8",
+                                         "price":  859.7912428148812,
+                                         "quantity":  13,
+                                         "category":  {
+                                                          "id":  "1",
+                                                          "name":  "Computer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "4ce07692-8736-440c-b8b3-c45cce6e98e1",
+                                         "name":  "Smartphone 1",
+                                         "price":  2502.872582782172,
+                                         "quantity":  52,
+                                         "category":  {
+                                                          "id":  "3",
+                                                          "name":  "Smartphone"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "4dde4088-13e2-4d7b-82d5-9422dcaac7f9",
+                                         "name":  "Printer 7",
+                                         "price":  257.091194132904,
+                                         "quantity":  93,
+                                         "category":  {
+                                                          "id":  "2",
+                                                          "name":  "Printer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "515cfb51-8598-47c8-acc4-bfe79114e493",
+                                         "name":  "Computer 3",
+                                         "price":  1485.3924503706833,
+                                         "quantity":  19,
+                                         "category":  {
+                                                          "id":  "1",
+                                                          "name":  "Computer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "60b0a552-2dae-4b44-9072-e7c7eebc0d50",
+                                         "name":  "Computer 6",
+                                         "price":  3552.1288025121066,
+                                         "quantity":  70,
+                                         "category":  {
+                                                          "id":  "1",
+                                                          "name":  "Computer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "7aba2f30-4188-4a2c-946b-a96746d8515c",
+                                         "name":  "Smartphone 5",
+                                         "price":  1901.2743768306755,
+                                         "quantity":  73,
+                                         "category":  {
+                                                          "id":  "3",
+                                                          "name":  "Smartphone"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "7d5acfa0-6d54-47a6-9d8d-b07178649f58",
+                                         "name":  "Printer 8",
+                                         "price":  1095.407910480867,
+                                         "quantity":  56,
+                                         "category":  {
+                                                          "id":  "2",
+                                                          "name":  "Printer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "8fd5856a-462e-44ee-b2a5-ee0ed4aa6ffe",
+                                         "name":  "Printer 2",
+                                         "price":  1353.306629208168,
+                                         "quantity":  27,
+                                         "category":  {
+                                                          "id":  "2",
+                                                          "name":  "Printer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "901502ee-68a4-4e84-9f44-29f551967dee",
+                                         "name":  "Smartphone 6",
+                                         "price":  3343.968222835443,
+                                         "quantity":  60,
+                                         "category":  {
+                                                          "id":  "3",
+                                                          "name":  "Smartphone"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "93acef37-e042-444a-84d0-888fd71684fc",
+                                         "name":  "Printer 9",
+                                         "price":  2188.4377337645938,
+                                         "quantity":  13,
+                                         "category":  {
+                                                          "id":  "2",
+                                                          "name":  "Printer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "95a37e62-e458-4553-a537-7853b969d2c5",
+                                         "name":  "Printer 5",
+                                         "price":  2955.201742074336,
+                                         "quantity":  75,
+                                         "category":  {
+                                                          "id":  "2",
+                                                          "name":  "Printer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "96c1a091-cb3d-4a3f-adec-96456e98395c",
+                                         "name":  "Printer 1",
+                                         "price":  3071.749554448421,
+                                         "quantity":  30,
+                                         "category":  {
+                                                          "id":  "2",
+                                                          "name":  "Printer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "9cf1b492-bcb9-41c5-b3b6-df60402195b7",
+                                         "name":  "Smartphone 3",
+                                         "price":  4202.459116931733,
+                                         "quantity":  75,
+                                         "category":  {
+                                                          "id":  "3",
+                                                          "name":  "Smartphone"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "a4fe2936-92f6-488d-8582-3288a5ab5d3a",
+                                         "name":  "Printer 10",
+                                         "price":  503.27211569296196,
+                                         "quantity":  3,
+                                         "category":  {
+                                                          "id":  "2",
+                                                          "name":  "Printer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "ad2374f6-68a0-4ec0-b70c-7c0f44d05302",
+                                         "name":  "Computer 7",
+                                         "price":  4014.508893950179,
+                                         "quantity":  0,
+                                         "category":  {
+                                                          "id":  "1",
+                                                          "name":  "Computer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "b0a442a3-de64-4fcd-a61a-ab372b4277f5",
+                                         "name":  "Printer 4",
+                                         "price":  1470.86300188902,
+                                         "quantity":  65,
+                                         "category":  {
+                                                          "id":  "2",
+                                                          "name":  "Printer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "c3ce263e-ae84-4204-8d04-6a295586c270",
+                                         "name":  "Computer 10",
+                                         "price":  4091.433097226804,
+                                         "quantity":  46,
+                                         "category":  {
+                                                          "id":  "1",
+                                                          "name":  "Computer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "c4949c35-f5e9-4505-9d0b-2bf0df446fde",
+                                         "name":  "Smartphone 4",
+                                         "price":  1992.1435899377987,
+                                         "quantity":  1,
+                                         "category":  {
+                                                          "id":  "3",
+                                                          "name":  "Smartphone"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "c92fcff4-df99-4eeb-8c5c-4040b2f3709c",
+                                         "name":  "Smartphone 8",
+                                         "price":  2844.6369698138856,
+                                         "quantity":  42,
+                                         "category":  {
+                                                          "id":  "3",
+                                                          "name":  "Smartphone"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "df3db8fa-3961-4a13-90e2-627a0d4225fc",
+                                         "name":  "Computer 4",
+                                         "price":  556.6230552920897,
+                                         "quantity":  2,
+                                         "category":  {
+                                                          "id":  "1",
+                                                          "name":  "Computer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "e4972858-cfcd-4fcf-a936-d96bf978d2b9",
+                                         "name":  "Printer 3",
+                                         "price":  961.0896884392621,
+                                         "quantity":  13,
+                                         "category":  {
+                                                          "id":  "2",
+                                                          "name":  "Printer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "e7759e2c-87de-427a-90dd-794714224f55",
+                                         "name":  "Computer 1",
+                                         "price":  3737.8184001643403,
+                                         "quantity":  48,
+                                         "category":  {
+                                                          "id":  "1",
+                                                          "name":  "Computer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "ebf0ebc5-856c-4ee0-906d-9a6909ec22a6",
+                                         "name":  "Computer 9",
+                                         "price":  3849.5309062772376,
+                                         "quantity":  30,
+                                         "category":  {
+                                                          "id":  "1",
+                                                          "name":  "Computer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "f2d046ac-d34b-424b-912e-01a240dc45db",
+                                         "name":  "Computer 2",
+                                         "price":  339.69652568693823,
+                                         "quantity":  25,
+                                         "category":  {
+                                                          "id":  "1",
+                                                          "name":  "Computer"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "f69771be-3884-4ade-a87f-56a5282a421b",
+                                         "name":  "Smartphone 7",
+                                         "price":  2463.4421043792768,
+                                         "quantity":  0,
+                                         "category":  {
+                                                          "id":  "3",
+                                                          "name":  "Smartphone"
+                                                      }
+                                     },
+                                     {
+                                         "id":  "f6a3dba3-9b49-4840-bb28-ca8d185fd115",
+                                         "name":  "Printer 6",
+                                         "price":  553.3225113533396,
+                                         "quantity":  35,
+                                         "category":  {
+                                                          "id":  "2",
+                                                          "name":  "Printer"
+                                                      }
+                                     }
+                                 ]
+             }
+}
