@@ -1,0 +1,259 @@
+name: Practical runtime evidence (SOA TPs)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/practical-evidence.yml'
+      - 'tools/practical_http.py'
+      - 'TP/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  jaxb:
+    name: TP1 - JAXB generation and reading
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '23'
+          cache: maven
+          cache-dependency-path: TP/TP01-JAXB/pom.xml
+      - name: Build and execute the three TP1 programs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          cd TP/TP01-JAXB
+          mvn -B -ntp clean verify > ../../evidence/maven.log 2>&1
+          for class in GenererMessageXml LireMessageXml GenererSchema; do
+            echo "=== $class ===" >> ../../evidence/console.log
+            mvn -B -ntp org.codehaus.mojo:exec-maven-plugin:3.4.1:java "-Dexec.mainClass=edu.iset.soa.tp1.$class" >> ../../evidence/console.log 2>&1
+          done
+          test -s message.xml
+          test -s message.xsd
+          cp message.xml message.xsd ../../evidence/
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          ET.parse("message.xml")
+          ET.parse("message.xsd")
+          print("Real JAXB XML and XSD files parsed successfully")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-tp1-jaxb
+          path: evidence/
+          if-no-files-found: warn
+
+  soap3:
+    name: TP3 - Live JAX-WS service and SOAP envelopes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '23'
+          cache: maven
+          cache-dependency-path: TP/TP03-Banque-SOAP/pom.xml
+      - name: Start server and verify SOAP over HTTP
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          (cd TP/TP03-Banque-SOAP && mvn -B -ntp clean verify) > evidence/maven.log 2>&1
+          (cd TP/TP03-Banque-SOAP && mvn -B -ntp exec:java) > evidence/server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          python3 tools/practical_http.py soap3
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-tp3-soap
+          path: evidence/
+          if-no-files-found: warn
+
+  cxf:
+    name: TP4 - CXF live client/server
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '23'
+          cache: maven
+          cache-dependency-path: TP/TP04-Client-Apache-CXF/pom.xml
+      - name: Build and run CXF producer and consumer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          (cd TP/TP04-Client-Apache-CXF && mvn -B -ntp clean verify) > evidence/maven.log 2>&1
+          (cd TP/TP04-Client-Apache-CXF && mvn -B -ntp exec:java -Dexec.mainClass=edu.iset.soa.tp4.LocalBanqueFixture) > evidence/server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          python3 - <<'PY'
+          import time, urllib.request
+          endpoint = "http://127.0.0.1:8081/BanqueWS?wsdl"
+          for _ in range(60):
+              try:
+                  with urllib.request.urlopen(endpoint, timeout=3) as response:
+                      if response.status == 200:
+                          print("CXF fixture WSDL served: HTTP 200")
+                          break
+              except Exception:
+                  time.sleep(2)
+          else:
+              raise RuntimeError("CXF fixture did not publish its WSDL")
+          PY
+          (cd TP/TP04-Client-Apache-CXF && mvn -B -ntp exec:java -Dexec.mainClass=edu.iset.soa.tp4.ClientMain) | tee evidence/client.log
+          grep -q 'Nombre de comptes : 3' evidence/client.log
+          grep -Eq 'conversion = 350(\.0)?' evidence/client.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-tp4-cxf
+          path: evidence/
+          if-no-files-found: warn
+
+  rest:
+    name: TP5 - Live REST via ${{ matrix.variant }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [jersey, spring-controller, spring-data-rest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: TP/TP05-Spring-REST/${{ matrix.variant }}/pom.xml
+      - name: Start web server and exercise endpoints
+        shell: bash
+        env:
+          VARIANT: ${{ matrix.variant }}
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          project="TP/TP05-Spring-REST/$VARIANT"
+          (cd "$project" && mvn -B -ntp clean verify) > evidence/maven.log 2>&1
+          (cd "$project" && mvn -B -ntp spring-boot:run) > evidence/server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          if [ "$VARIANT" = "spring-data-rest" ]; then
+            python3 tools/practical_http.py rest data
+          else
+            python3 tools/practical_http.py rest "$VARIANT"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-tp5-${{ matrix.variant }}
+          path: evidence/
+          if-no-files-found: warn
+
+  weather:
+    name: TP6 - Real Spring HTTP API with simulated weather upstream
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: TP/TP06-OpenWeatherMap/pom.xml
+      - name: Run application and isolated HTTP upstream
+        shell: bash
+        env:
+          SPRING_APPLICATION_JSON: '{"weather":{"api":{"url":"http://127.0.0.1:18080/data/2.5/weather","key":"ci-test-only"}}}'
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          (cd TP/TP06-OpenWeatherMap && mvn -B -ntp clean verify) > evidence/maven.log 2>&1
+          python3 tools/practical_http.py weather-upstream > evidence/upstream.log 2>&1 &
+          upstream_pid=$!
+          (cd TP/TP06-OpenWeatherMap && mvn -B -ntp spring-boot:run) > evidence/server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" "$upstream_pid" 2>/dev/null || true' EXIT
+          python3 tools/practical_http.py weather
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-tp6-weather-simulated
+          path: evidence/
+          if-no-files-found: warn
+
+  graphql:
+    name: TP7 - Live GraphQL and MySQL
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ci-local-only
+          MYSQL_DATABASE: ProduitDB
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pci-local-only"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: TP/TP07-Spring-GraphQL/pom.xml
+      - name: Execute GraphQL exercises against real MySQL
+        shell: bash
+        env:
+          DB_URL: jdbc:mysql://127.0.0.1:3306/ProduitDB?createDatabaseIfNotExist=true
+          DB_USER: root
+          DB_PASSWORD: ci-local-only
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          (cd TP/TP07-Spring-GraphQL && mvn -B -ntp clean verify) > evidence/maven.log 2>&1
+          (cd TP/TP07-Spring-GraphQL && mvn -B -ntp spring-boot:run) > evidence/server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          python3 tools/practical_http.py graphql
+          mysql_container="$(docker ps --filter ancestor=mysql:8.0 --format '{{.ID}}' | head -n 1)"
+          test -n "$mysql_container"
+          docker exec -e MYSQL_PWD=ci-local-only "$mysql_container" mysql -u root ProduitDB -e 'SHOW TABLES; SELECT COUNT(*) AS categories FROM category; SELECT COUNT(*) AS products FROM product;' > evidence/mysql-tables.txt
+          cat evidence/mysql-tables.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-tp7-mysql-graphql
+          path: evidence/
+          if-no-files-found: warn
+
+  soap2:
+    name: TP2 - Public SOAP endpoint reachability (informational)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send actual SOAP envelopes to public endpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/practical_http.py soap2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-tp2-remote-soap-http
+          path: evidence/
+          if-no-files-found: warn
