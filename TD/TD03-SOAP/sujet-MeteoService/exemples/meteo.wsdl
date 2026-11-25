@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:tns="http://www.mymeteo.com/webservices/meteo"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:ns1="http://www.mymeteo.com/meteo"
+  targetNamespace="http://www.mymeteo.com/webservices/meteo" name="MeteoService">
+  <types><xs:schema targetNamespace="http://www.mymeteo.com/meteo" elementFormDefault="qualified">
+    <xs:complexType name="temperature"><xs:sequence><xs:element name="valeur" type="xs:double"/><xs:element name="unite" type="xs:string"/></xs:sequence></xs:complexType>
+    <xs:complexType name="lieu"><xs:sequence><xs:element name="ville" type="xs:string"/></xs:sequence></xs:complexType>
+    <xs:complexType name="releve"><xs:sequence><xs:element name="temperature" type="ns1:temperature"/><xs:element name="lieu" type="ns1:lieu"/></xs:sequence></xs:complexType>
+    <xs:element name="lieu" type="ns1:lieu"/><xs:element name="releve" type="ns1:releve"/>
+  </xs:schema></types>
+  <message name="releveMeteo"><part name="partLieu" element="ns1:lieu"/></message>
+  <message name="releveMeteoResponse"><part name="partReleve" element="ns1:releve"/></message>
+  <portType name="MeteoService"><operation name="releveMeteo"><input message="tns:releveMeteo"/><output message="tns:releveMeteoResponse"/></operation></portType>
+  <binding name="MeteoServicePortBinding" type="tns:MeteoService"><soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/><operation name="releveMeteo"><soap:operation soapAction=""/><input><soap:body use="literal"/></input><output><soap:body use="literal"/></output></operation></binding>
+  <service name="MeteoService"><port name="MeteoServicePort" binding="tns:MeteoServicePortBinding"><soap:address location="http://www.mymeteo.com/ws/meteo"/></port></service>
+</definitions>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE universite SYSTEM "universite.dtd">
+<universite>
+  <etudiant id="E001">
+    <nom>Ben Salem</nom><prenom>Ahmed</prenom><email>ahmed@example.com</email>
+    <formation niveau="Ingenieur"><specialite>Génie Logiciel</specialite><annee>2</annee></formation>
+  </etudiant>
+  <etudiant id="E002">
+    <nom>Trabelsi</nom><prenom>Sarra</prenom><email>sarra@example.com</email>
+    <formation niveau="Master"><specialite>Data Science</specialite><annee>1</annee></formation>
+  </etudiant>
+  <etudiant id="E003">
+    <nom>Jaziri</nom><prenom>Mohamed</prenom><email>mohamed@example.com</email>
+    <formation niveau="Ingenieur"><specialite>Réseaux</specialite><annee>3</annee></formation>
+  </etudiant>
+  <etudiant id="E004">
+    <nom>Gharbi</nom><prenom>Amira</prenom><email>amira@example.com</email>
+    <formation niveau="Master"><specialite>Intelligence Artificielle</specialite><annee>1</annee></formation>
+  </etudiant>
+</universite>

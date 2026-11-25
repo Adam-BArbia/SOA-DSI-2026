@@ -1,0 +1,10 @@
+<!ELEMENT universite (etudiant*)>
+<!ELEMENT etudiant (nom, prenom, email, formation)>
+<!ATTLIST etudiant id ID #REQUIRED>
+<!ELEMENT nom (#PCDATA)>
+<!ELEMENT prenom (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT formation (specialite, annee)>
+<!ATTLIST formation niveau (Licence|Ingenieur|Master) #REQUIRED>
+<!ELEMENT specialite (#PCDATA)>
+<!ELEMENT annee (#PCDATA)>

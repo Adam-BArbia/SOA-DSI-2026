@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<etudiant>
+  <nom>Ben Salem</nom>
+  <prenom>Ahmed</prenom>
+  <contact>
+    <email>ahmed@example.com</email>
+    <telephone>22111222</telephone>
+  </contact>
+  <formation niveau="Ingenieur">
+    <specialite>Génie Logiciel</specialite>
+    <annee>2</annee>
+  </formation>
+  <email>autre@example.com</email>
+</etudiant>

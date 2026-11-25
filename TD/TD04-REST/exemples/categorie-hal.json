@@ -1,0 +1,1 @@
+{"name":"Sport","description":"Activités sportives","_links":{"self":{"href":"http://localhost:8080/api/categories/1"},"activities":{"href":"http://localhost:8080/api/categories/1/activities"}}}

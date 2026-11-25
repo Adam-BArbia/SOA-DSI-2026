@@ -1,0 +1,1 @@
+mutation { addBook(title: "Programmation avec Spring", authorId: "1") { id title author { name } } }

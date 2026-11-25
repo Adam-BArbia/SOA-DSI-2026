@@ -1,0 +1,9 @@
+GET http://localhost:8080/data
+###
+GET http://localhost:8080/data/activities
+###
+GET http://localhost:8080/data/categories
+###
+GET http://localhost:8080/data/activities/search/findByStatus?status=OPEN
+###
+GET http://localhost:8080/data/activities/search/findByCategoryId?categoryId=1

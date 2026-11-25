@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:met="http://www.mymeteo.com/meteo">
+  <soapenv:Header/>
+  <soapenv:Body><met:lieu><met:ville>Tunis</met:ville></met:lieu></soapenv:Body>
+</soapenv:Envelope>

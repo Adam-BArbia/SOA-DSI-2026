@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="AgeType"><xs:restriction base="xs:integer"><xs:minInclusive value="18"/><xs:maxInclusive value="60"/></xs:restriction></xs:simpleType>
+  <xs:simpleType name="AnneeType"><xs:restriction base="xs:integer"><xs:minInclusive value="1"/><xs:maxInclusive value="5"/></xs:restriction></xs:simpleType>
+  <xs:complexType name="FormationType">
+    <xs:attribute name="niveau" use="required">
+      <xs:simpleType><xs:restriction base="xs:string"><xs:enumeration value="Licence"/><xs:enumeration value="Ingenieur"/><xs:enumeration value="Master"/></xs:restriction></xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:element name="etudiant">
+    <xs:complexType><xs:sequence>
+      <xs:element name="id" type="xs:integer"/><xs:element name="nom" type="xs:string"/>
+      <xs:element name="prenom" type="xs:string"/><xs:element name="age" type="AgeType"/>
+      <xs:element name="email" type="xs:string"/><xs:element name="formation" type="FormationType"/>
+      <xs:element name="annee" type="AnneeType"/>
+    </xs:sequence></xs:complexType>
+  </xs:element>
+</xs:schema>

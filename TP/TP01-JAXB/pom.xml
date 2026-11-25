@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>edu.iset.soa</groupId><artifactId>tp01-jaxb</artifactId><version>1.0.0</version>
+  <properties><maven.compiler.release>23</maven.compiler.release><java.version>23</java.version><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties>
+  <dependencies><dependency><groupId>jakarta.xml.bind</groupId><artifactId>jakarta.xml.bind-api</artifactId><version>4.0.2</version></dependency><dependency><groupId>org.glassfish.jaxb</groupId><artifactId>jaxb-runtime</artifactId><version>4.0.5</version></dependency><dependency><groupId>org.junit.jupiter</groupId><artifactId>junit-jupiter</artifactId><version>5.11.4</version><scope>test</scope></dependency></dependencies>
+  <build><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.13.0</version></plugin>
+    <plugin><groupId>org.codehaus.mojo</groupId><artifactId>jaxb2-maven-plugin</artifactId><version>3.2.0</version>
+    <executions><execution><id>xjc</id><phase>generate-sources</phase><goals><goal>xjc</goal></goals></execution></executions>
+    <configuration><sources><source>${project.basedir}/src/main/xsd/message.xsd</source></sources><packageName>edu.iset.soa.tp1.generated</packageName></configuration></plugin>
+    <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.2.5</version></plugin></plugins></build>
+</project>

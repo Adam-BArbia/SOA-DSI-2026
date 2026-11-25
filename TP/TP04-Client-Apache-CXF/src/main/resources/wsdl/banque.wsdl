@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.tp4.soa.iset.edu/"
+   targetNamespace="http://service.tp4.soa.iset.edu/" name="BanqueServiceImplService">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://service.tp4.soa.iset.edu/" elementFormDefault="qualified">
+      <xs:complexType name="compte"><xs:sequence>
+        <xs:element name="code" type="xs:long"/><xs:element name="solde" type="xs:double"/>
+        <xs:element name="dateCreation" type="xs:dateTime" minOccurs="0"/>
+      </xs:sequence></xs:complexType>
+      <xs:element name="getCompte"><xs:complexType><xs:sequence><xs:element name="code" type="xs:long"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="getCompteResponse"><xs:complexType><xs:sequence><xs:element name="return" type="tns:compte" minOccurs="0"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="getComptes"><xs:complexType><xs:sequence/></xs:complexType></xs:element>
+      <xs:element name="getComptesResponse"><xs:complexType><xs:sequence><xs:element name="return" type="tns:compte" minOccurs="0" maxOccurs="unbounded"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="conversionEuroToDinar"><xs:complexType><xs:sequence><xs:element name="montant" type="xs:double"/></xs:sequence></xs:complexType></xs:element>
+      <xs:element name="conversionEuroToDinarResponse"><xs:complexType><xs:sequence><xs:element name="return" type="xs:double"/></xs:sequence></xs:complexType></xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getCompte"><wsdl:part name="parameters" element="tns:getCompte"/></wsdl:message>
+  <wsdl:message name="getCompteResponse"><wsdl:part name="parameters" element="tns:getCompteResponse"/></wsdl:message>
+  <wsdl:message name="getComptes"><wsdl:part name="parameters" element="tns:getComptes"/></wsdl:message>
+  <wsdl:message name="getComptesResponse"><wsdl:part name="parameters" element="tns:getComptesResponse"/></wsdl:message>
+  <wsdl:message name="conversionEuroToDinar"><wsdl:part name="parameters" element="tns:conversionEuroToDinar"/></wsdl:message>
+  <wsdl:message name="conversionEuroToDinarResponse"><wsdl:part name="parameters" element="tns:conversionEuroToDinarResponse"/></wsdl:message>
+  <wsdl:portType name="BanqueService">
+    <wsdl:operation name="getCompte"><wsdl:input message="tns:getCompte"/><wsdl:output message="tns:getCompteResponse"/></wsdl:operation>
+    <wsdl:operation name="getComptes"><wsdl:input message="tns:getComptes"/><wsdl:output message="tns:getComptesResponse"/></wsdl:operation>
+    <wsdl:operation name="conversionEuroToDinar"><wsdl:input message="tns:conversionEuroToDinar"/><wsdl:output message="tns:conversionEuroToDinarResponse"/></wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BanqueServiceBinding" type="tns:BanqueService"><soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getCompte"><soap:operation soapAction=""/><wsdl:input><soap:body use="literal"/></wsdl:input><wsdl:output><soap:body use="literal"/></wsdl:output></wsdl:operation>
+    <wsdl:operation name="getComptes"><soap:operation soapAction=""/><wsdl:input><soap:body use="literal"/></wsdl:input><wsdl:output><soap:body use="literal"/></wsdl:output></wsdl:operation>
+    <wsdl:operation name="conversionEuroToDinar"><soap:operation soapAction=""/><wsdl:input><soap:body use="literal"/></wsdl:input><wsdl:output><soap:body use="literal"/></wsdl:output></wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BanqueServiceImplService"><wsdl:port name="BanqueServiceImplPort" binding="tns:BanqueServiceBinding"><soap:address location="http://localhost:8081/BanqueWS"/></wsdl:port></wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<etudiant><id>125</id><nom>Ben Salem</nom><prenom>Ahmed</prenom><email>ahmed@example.com</email><formation><code>GL</code><libelle>Génie Logiciel</libelle></formation></etudiant>

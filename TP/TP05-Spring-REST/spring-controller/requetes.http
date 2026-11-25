@@ -1,0 +1,26 @@
+GET http://localhost:8080/api/activities
+###
+GET http://localhost:8080/api/activities/1
+###
+GET http://localhost:8080/api/activities/status/OPEN
+###
+GET http://localhost:8080/api/activities/category/1
+###
+GET http://localhost:8080/api/activities/search/Foot
+###
+GET http://localhost:8080/api/categories
+
+###
+POST http://localhost:8080/api/activities
+Content-Type: application/json
+
+{"name":"Atelier Spring","description":"TP REST","localDate":"2026-12-15","location":"Sousse","capacity":24,"price":40.0,"status":"OPEN","category":{"id":1}}
+
+###
+PUT http://localhost:8080/api/activities/1
+Content-Type: application/json
+
+{"name":"Football (modifié)","description":"Match amical","localDate":"2026-12-11","location":"Tunis","capacity":20,"price":18.0,"status":"OPEN","category":{"id":1}}
+
+###
+DELETE http://localhost:8080/api/activities/2

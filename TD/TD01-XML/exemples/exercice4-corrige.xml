@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE universite SYSTEM "universite.dtd">
+<universite>
+  <etudiant id="E004">
+    <nom>Trabelsi</nom><prenom>Sarra</prenom><email>sarra@example.com</email>
+    <formation niveau="Ingenieur"><specialite>Informatique</specialite><annee>3</annee></formation>
+  </etudiant>
+</universite>

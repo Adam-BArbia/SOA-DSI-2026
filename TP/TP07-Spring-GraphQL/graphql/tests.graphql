@@ -1,0 +1,31 @@
+# Dans GraphiQL exécuter chaque opération séparément.
+# 1. Tous les produits
+query Products { productList { id name price quantity } }
+
+# 2. Toutes les catégories
+query Categories { categories { id name } }
+
+# 3. Produit avec sa catégorie
+query ProductsWithCategory { productList { name category { id name } } }
+
+# 4. Catégories avec produits
+query CategoriesWithProducts { categories { id name products { id name } } }
+
+# 5. Produit par ID (remplacer PRODUCT_ID)
+query ProductById { productById(id: "PRODUCT_ID") { id name price } }
+
+# 6. Catégorie par ID (adapter l'ID à l'insertion)
+query CategoryById { categoryById(id: "1") { id name products { id } } }
+
+# 7. Ajouter un produit
+mutation Save { saveProduct(product: {name:"PC Demo",price:1299.0,quantity:8,categoryId:"1"}) { id name price } }
+
+# 8. Vérifier l'ajout : exécuter Products ou ProductById avec l'ID créé.
+# 9. Modifier (remplacer PRODUCT_ID)
+mutation Update { updateProduct(id:"PRODUCT_ID",product:{name:"PC Demo Modifié",price:1199.0,quantity:12,categoryId:"1"}) { id name price quantity } }
+
+# 10. Vérifier la modification : ProductById.
+# 11. Supprimer
+mutation Delete { deleteProduct(id:"PRODUCT_ID") }
+
+# 12. Vérifier la suppression : ProductById doit retourner null.

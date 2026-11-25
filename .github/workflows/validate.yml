@@ -1,0 +1,45 @@
+name: Validate SOA independent assignments
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install static XML validation dependency
+        run: python -m pip install lxml
+      - name: Validate XML, XSD, WSDL, JSON and PDF headers
+        run: python tools/verify_static.py
+
+  maven:
+    name: Maven ${{ matrix.project }} (Java ${{ matrix.java }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { project: 'TP/TP01-JAXB', java: '23' }
+          - { project: 'TP/TP03-Banque-SOAP', java: '23' }
+          - { project: 'TP/TP04-Client-Apache-CXF', java: '23' }
+          - { project: 'TP/TP05-Spring-REST/jersey', java: '17' }
+          - { project: 'TP/TP05-Spring-REST/spring-controller', java: '17' }
+          - { project: 'TP/TP05-Spring-REST/spring-data-rest', java: '17' }
+          - { project: 'TP/TP06-OpenWeatherMap', java: '17' }
+          - { project: 'TP/TP07-Spring-GraphQL', java: '17' }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+          cache: maven
+          cache-dependency-path: ${{ matrix.project }}/pom.xml
+      - name: Build and run module unit tests
+        working-directory: ${{ matrix.project }}
+        run: mvn -B -ntp clean verify

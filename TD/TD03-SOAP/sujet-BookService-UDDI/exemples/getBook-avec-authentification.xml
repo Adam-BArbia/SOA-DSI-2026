@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Exemple de cours ; ne pas utiliser de mot de passe en clair en production. -->
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:b="urn:bookservice:demonstration">
+  <soapenv:Header><b:authentification><b:login>client2</b:login><b:password>xyz789</b:password></b:authentification></soapenv:Header>
+  <soapenv:Body><b:getBook><b:bookId>87</b:bookId></b:getBook></soapenv:Body>
+</soapenv:Envelope>
