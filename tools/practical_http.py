@@ -170,6 +170,79 @@ def run_soap3():
         raise AssertionError("Generated WSDL is missing expected names")
     log("generated WSDL", "pass", f"HTTP {status}; actual JAX-WS WSDL", wsdl[:700])
     (OUT / "wsdl-generated.xml").write_text(wsdl, encoding="utf-8")
+
+    # Inspect the actual Metro WSDL and its imported XML schemas. The derived
+    # inventory is reproducible evidence, not a hand-written WSDL example.
+    wsdl_ns = "{http://schemas.xmlsoap.org/wsdl/}"
+    soap_ns = "{http://schemas.xmlsoap.org/wsdl/soap/}"
+    xsd_ns = "{http://www.w3.org/2001/XMLSchema}"
+    contract = ET.fromstring(wsdl)
+    inventory = {
+        "targetNamespace": contract.get("targetNamespace"),
+        "services": [],
+        "portTypes": [],
+        "bindings": [],
+        "schemas": [],
+    }
+    for service in contract.findall(wsdl_ns + "service"):
+        inventory["services"].append({
+            "name": service.get("name"),
+            "ports": [{"name": p.get("name"), "binding": p.get("binding")}
+                      for p in service.findall(wsdl_ns + "port")],
+        })
+    for port_type in contract.findall(wsdl_ns + "portType"):
+        inventory["portTypes"].append({
+            "name": port_type.get("name"),
+            "operations": [{
+                "name": op.get("name"),
+                "input": (op.find(wsdl_ns + "input").get("message")
+                          if op.find(wsdl_ns + "input") is not None else None),
+                "output": (op.find(wsdl_ns + "output").get("message")
+                           if op.find(wsdl_ns + "output") is not None else None),
+            } for op in port_type.findall(wsdl_ns + "operation")],
+        })
+    for binding in contract.findall(wsdl_ns + "binding"):
+        soap_binding = binding.find(soap_ns + "binding")
+        inventory["bindings"].append({
+            "name": binding.get("name"),
+            "type": binding.get("type"),
+            "style": soap_binding.get("style") if soap_binding is not None else None,
+            "transport": soap_binding.get("transport") if soap_binding is not None else None,
+            "operations": [op.get("name") for op in binding.findall(wsdl_ns + "operation")],
+        })
+    schema_documents = [("embedded", e) for e in contract.findall(
+        ".//" + wsdl_ns + "types/" + xsd_ns + "schema")]
+    visited_urls = set()
+    for index, imp in enumerate(contract.findall(".//" + xsd_ns + "import"), start=1):
+        location = imp.get("schemaLocation")
+        if not location or location in visited_urls:
+            continue
+        visited_urls.add(location)
+        try:
+            xsd_status, xsd_body = request(location, timeout=8)
+            assert_status(xsd_status, {200}, "imported XSD")
+            schema_root = ET.fromstring(xsd_body)
+            schema_documents.append((f"import-{index}", schema_root))
+            (OUT / f"xsd-import-{index}.xml").write_text(xsd_body, encoding="utf-8")
+        except (OSError, ValueError, ET.ParseError) as err:
+            log("imported XSD", "inconclusive", f"Could not fetch {location}: {type(err).__name__}")
+    for origin, schema in schema_documents:
+        inventory["schemas"].append({
+            "origin": origin,
+            "targetNamespace": schema.get("targetNamespace"),
+            "complexTypes": [{
+                "name": complex_type.get("name"),
+                "elements": [{
+                    "name": item.get("name"), "type": item.get("type"),
+                    "minOccurs": item.get("minOccurs"),
+                    "maxOccurs": item.get("maxOccurs"),
+                } for item in complex_type.iter(xsd_ns + "element")]
+            } for complex_type in schema.findall(xsd_ns + "complexType")],
+        })
+    (OUT / "wsdl-inventory.json").write_text(
+        json.dumps(inventory, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("GENERATED_WSDL_INVENTORY " + json.dumps(inventory, ensure_ascii=False), flush=True)
+
     for operation, argument in [
         ("conversionEuroToDinar", "<montant>100</montant>"),
         ("getCompte", "<code>1</code>"),
