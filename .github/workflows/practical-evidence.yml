@@ -8,6 +8,7 @@ on:
       - 'tools/practical_http.py'
       - 'TP/**'
   workflow_dispatch:
+  pull_request:
 
 permissions:
   contents: read
@@ -31,10 +32,9 @@ jobs:
           mkdir -p evidence
           cd TP/TP01-JAXB
           mvn -B -ntp clean verify > ../../evidence/maven.log 2>&1
-          for class in GenererMessageXml LireMessageXml GenererSchema; do
-            echo "=== $class ===" >> ../../evidence/console.log
-            mvn -B -ntp org.codehaus.mojo:exec-maven-plugin:3.4.1:java "-Dexec.mainClass=edu.iset.soa.tp1.$class" >> ../../evidence/console.log 2>&1
-          done
+          # Les trois programmes sont exécutés par ProgrammesJaxbIntegrationTest.
+          # Aucun téléchargement additionnel du plugin exec n'est nécessaire.
+          grep -E 'XML généré|From =|To =|Text =|isNew =|Schéma généré' ../../evidence/maven.log > ../../evidence/console.log || true
           test -s message.xml
           test -s message.xsd
           cp message.xml message.xsd ../../evidence/
