@@ -1,51 +1,41 @@
 # Guide de démonstration locale — preuves pratiques
 
-Ce guide rassemble des manipulations **complémentaires et facultatives**, sauf lorsque l'enseignante exige explicitement des preuves d'interface, sur un poste Windows avec IntelliJ, Maven, SoapUI et XAMPP. Les comptes rendus sont rangés **dans chaque TP**, sans dépendance entre les projets. Les commandes et les fichiers d'exemple facilitent la reproduction ; une capture n'est conservée comme preuve qu'après exécution effective.
+Ce guide distingue les manipulations **effectivement réalisées sur Windows** des contrôles automatisés GitHub Actions. Chaque TP reste autonome ; les preuves locales sont classées dans son dossier `preuves/` et les comptes rendus dans `compte-rendu.md`.
 
-## Ordre conseillé : moins de manipulations
+## État des démonstrations
 
-| TP | Manipulation minimale | Preuve à conserver |
+| TP | Vérification manuelle réalisée | Preuves locales |
 | --- | --- | --- |
-| TP1 — JAXB | Déjà vérifié en CI ; lancement local facultatif | Console + `message.xml` et `message.xsd` |
-| TP2 — SoapUI | Importer les deux WSDL publics et envoyer Add / FullCountryInfo | Une réponse SOAP par service |
-| TP3 — Banque SOAP | Démarrer `BanqueServer`, ouvrir `?wsdl`, lancer les trois opérations dans SoapUI | WSDL + réponse SOAP |
-| TP4 — CXF | Déjà vérifié de bout en bout en CI | Console du serveur et du client |
-| TP5 — REST | HTTP déjà vérifié en CI ; test graphique facultatif | Réponses HTTP et statut de chaque variante |
-| TP6 — Météo | Configurer la clé OpenWeatherMap, lancer le service et demander Tunis puis Sousse | Deux réponses JSON |
-| TP7 — GraphQL | MySQL 8 et 12 opérations déjà vérifiés en CI ; interface locale facultative | GraphiQL + tables dans phpMyAdmin |
+| TP1 — JAXB | Pas de vérification manuelle attestée dans cette session ; exécution CI disponible | — |
+| TP2 — SoapUI | Import WSDL publics et réponses réelles `Add(15,35)=50`, `FullCountryInfo(TN)` | 2 captures et 2 projets SoapUI : [preuves](../TP/TP02-SOAPUI/preuves/) |
+| TP3 — Banque SOAP | Serveur local, WSDL et trois opérations exécutées dans SoapUI | 3 captures et 1 projet SoapUI : [preuves](../TP/TP03-Banque-SOAP/preuves/) |
+| TP4 — CXF | Pas de vérification manuelle attestée dans cette session ; échange client/serveur validé en CI | — |
+| TP5 — REST | Variante Spring MVC : Maven `verify` et consultation de la console H2 (2 catégories, 2 activités) | [Capture H2](../TP/TP05-Spring-REST/preuves/TP05-H2-Console-Success.png) |
+| TP6 — Météo | Maven `verify` et appels réels OpenWeatherMap pour Tunis et Sousse | [Tunis](../TP/TP06-OpenWeatherMap/preuves/TP06-OpenWeatherMap-Tunis-Success.png), [Sousse](../TP/TP06-OpenWeatherMap/preuves/TP06-OpenWeatherMap-Sousse-Success.png) |
+| TP7 — GraphQL | Maven `verify`, XAMPP/MariaDB, phpMyAdmin, GraphQL CRUD via PowerShell et `productList` dans GraphiQL | 3 captures SQL, 1 capture GraphiQL, 1 réponse JSON : [preuves](../TP/TP07-Spring-GraphQL/preuves/) |
 
-## Vérification préalable commune
+Les scénarios HTTP/CRUD des trois variantes TP5 et les douze étapes GraphQL TP7 sont également vérifiés **en CI** ; la preuve d'une exécution CI ne constitue pas automatiquement une preuve d'exécution manuelle.
 
-Les workflows GitHub Actions ont déjà validé les huit projets Maven et exécuté de vrais échanges SOAP, REST et GraphQL/MySQL ([résultats distants](resultats-verification-distante.md)). Ne refaire `mvn clean verify` que pour une démonstration locale ou après modification. Deux éléments ne sont pas couverts par des réponses fournisseurs réelles : les services publics SOAP du TP2 (échec de connexion) et OpenWeatherMap du TP6 (amont simulé).
+## Vérifications distantes et limites
 
-## MySQL / TP7 : procédure courte
+Les workflows ont testé les services en runners Linux : [résultats distants](resultats-verification-distante.md). En CI, les services SOAP publics du TP2 avaient réinitialisé les connexions, tandis que l'amont météo du TP6 était simulé. Les tests manuels ultérieurs ont, séparément, obtenu des réponses réelles des deux fournisseurs SOAP et d'OpenWeatherMap.
 
-1. Ouvrir **XAMPP Control Panel** et démarrer **MySQL**.
-2. Ouvrir `http://localhost/phpmyadmin` et exécuter :
+## Reproduire TP7 avec XAMPP
 
-```sql
-CREATE DATABASE IF NOT EXISTS ProduitDB
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-```
+1. Démarrer MySQL dans XAMPP et ouvrir `http://localhost/phpmyadmin`.
+2. Utiliser la base `ProduitDB` (la configuration JDBC actuelle permet de la créer si nécessaire). Le serveur initialise trois catégories et trente produits lorsque la base est vide.
+3. Fournir si nécessaire `DB_URL`, `DB_USER`, `DB_PASSWORD` dans la configuration d'exécution locale ; **ne pas publier de mots de passe**.
+4. Démarrer `InventoryApplication` (port 8090), puis ouvrir `http://localhost:8090/graphiql?path=/graphql`.
+5. Exécuter `productList`; les mutations et la vérification de suppression sont décrites dans [graphql/tests.graphql](../TP/TP07-Spring-GraphQL/graphql/tests.graphql) et le [compte rendu](../TP/TP07-Spring-GraphQL/compte-rendu.md).
+6. Contrôler les tables `category` et `product` dans phpMyAdmin.
 
-3. Dans `TP/TP07-Spring-GraphQL`, définir les paramètres de connexion dans l'environnement IntelliJ si la configuration XAMPP est différente : `DB_URL`, `DB_USER`, `DB_PASSWORD`. Pour une installation locale XAMPP par défaut, vérifier l'utilisateur `root` et son mot de passe réel ; ne jamais committer de secret.
-4. Lancer l'application et ouvrir `http://localhost:8090/graphiql?path=/graphql`.
-5. Copier les opérations du fichier `graphql/tests.graphql` et les exécuter dans l'ordre. Réutiliser l'identifiant créé pour les opérations update/delete.
-6. Dans phpMyAdmin, ouvrir `ProduitDB` et vérifier les enregistrements et les relations.
+Le navigateur GraphiQL a été débloqué localement avec `spring-graphql.version=1.3.6`. Cette configuration à dépendances frontend CDN ne doit **pas** être considérée comme évaluée pour une exposition publique. Ne pas exposer GraphiQL sur Internet sans mise à niveau ou solution locale maîtrisée et contrôle de sécurité.
 
-**Preuves recommandées :** une capture de GraphiQL avec `productList`, une capture d'une mutation réussie, une capture phpMyAdmin montrant les tables.
+## Reproduire TP2 et TP3 dans SoapUI
 
-## SoapUI : procédure courte
+- TP2 : importer les WSDL Calculator et CountryInfoService, puis exécuter `Add` et `FullCountryInfo` avec les valeurs des comptes rendus. Les fichiers `*-soapui-project.xml` des dossiers `preuves/` peuvent être réimportés.
+- TP3 : démarrer `BanqueServer`, importer `http://localhost:8080/BanqueWS?wsdl`, puis exécuter `conversionEuroToDinar`, `getCompte` et `getComptes`. Employer le paramètre `montant` pour la conversion.
 
-- **TP2** : File > New SOAP Project ; importer le WSDL Calculator puis celui de CountryInfoService ; reprendre les XML de `requetes/` et cliquer sur Submit. Exporter le projet via **Save Project As** au format XML dans le dossier TP2.
-- **TP3** : lancer `BanqueServer` avant d'importer `http://localhost:8080/BanqueWS?wsdl`. Envoyer `conversionEuroToDinar`, `getCompte`, `getComptes`.
-- En cas d'échec d'un service public, noter le code HTTP et le message réel ; le service distant peut être indisponible.
+## Critère et classement des preuves
 
-## Où ranger les preuves
-
-Dans le dossier de chaque TP, créer au besoin `captures/` et y placer des PNG nommés `01-demarrage.png`, `02-requete.png`, `03-reponse.png`. Ne pas y ajouter de faux écrans ou de réponses générées pour les présenter comme des captures.
-
-## Critère de fin
-
-Une preuve est suffisante lorsqu'elle montre : l'application ou le client utilisé, l'opération appelée, les paramètres et le résultat observé. Il n'est pas nécessaire de faire une capture pour chaque ligne de code.
+Conserver les PNG réels, réponses JSON et exports SoapUI dans `TP/TPxx-*/preuves/` avec leurs noms `TPxx-...` existants. Ne pas inclure les identifiants temporaires de tests, secrets, captures fabriquées ou réponses illustratives présentées comme observations. Les anciennes observations CI restent attribuées à leur environnement.
