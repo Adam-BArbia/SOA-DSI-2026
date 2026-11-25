@@ -34,7 +34,7 @@
 3. Consulter les exemples fournis. Les services externes, clés ou MySQL sont explicitement signalés.
 4. Aucune fonctionnalité ne requiert de référencer un autre dossier du dépôt.
 
-**Note de validation :** les tests Maven et les intégrations SOAP/HTTP, REST et MySQL déjà réussis en GitHub Actions sont documentés dans les [résultats de vérification](docs/resultats-verification-distante.md). Les appels aux services SOAP publics du TP2 restent non concluants ; les données météo du TP6 proviennent d'un amont simulé. Aucune session graphique SoapUI/XAMPP/GraphiQL n'est supposée.
+**Note de validation :** les contrôles Maven et les intégrations SOAP/HTTP, REST et MySQL effectués en GitHub Actions sont documentés dans les [résultats de vérification](docs/resultats-verification-distante.md). Les appels aux services SOAP publics du TP2 restent non concluants **uniquement depuis les runners CI** ; le fournisseur météo utilisé en CI pour le TP6 est simulé. En revanche, des essais **manuels locaux ont réellement été documentés** : SoapUI (TP2 et TP3), console H2 (TP5), OpenWeatherMap réel (TP6), XAMPP/MariaDB et GraphiQL (TP7). Voir le [guide des preuves](docs/guide-preuves-pratiques.md) et les captures d'origine, en distinguant ces observations des tests automatisés.
 
 ## Divergences ou ambiguïtés des énoncés
 

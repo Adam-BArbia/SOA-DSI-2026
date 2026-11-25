@@ -2,6 +2,25 @@
 
 **Date :** 25 novembre 2026 · **Méthode :** GitHub Actions, runners Linux éphémères · **Exécutions :** [workflow initial — run 45591780562](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45591780562) et [vérification après correction CXF — run 45592227117](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117).
 
+## État de la révision examinée le 25 novembre 2026
+
+Le commit `ab90d99bc933da9429748901c89501ab85062300` a déclenché deux exécutions :
+- [Validation statique et Maven — 45639842403](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45639842403) : **succès**.
+- [Tests pratiques — 45639842192](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45639842192) : **échec global**, malgré huit jobs réussis. L'unique job en échec, TP1 JAXB, a compilé et réussi son test Maven, puis subi un HTTP 429 du dépôt Maven Central lors de la résolution du plugin `exec-maven-plugin:3.4.1`. [Journal original](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45639842192/artifacts/15034378694).
+
+La branche de correction substitue un test d'intégration Maven/JUnit exécutant les trois programmes JAXB et validant le XML contre le XSD généré. Le statut final devra être apprécié à partir des vérifications effectuées **après** cette correction : le succès de l'ancien run ne suffit pas.
+
+## Inspection indépendante des images locales
+
+Le 25/11/2026, les **12 captures PNG** présentes dans les dossiers `preuves/` ont été ouvertes et examinées visuellement :
+- TP2 : 2 réponses SoapUI (Calculator = 50 ; CountryInfoService = Tunisie).
+- TP3 : 3 réponses SoapUI (conversion = 350 ; compte individuel = 1100 ; liste 2000/3500/8700).
+- TP5 : 1 capture H2 avec les deux tables et leurs données.
+- TP6 : 2 réponses JSON de météo pour Tunis et Sousse.
+- TP7 : 4 captures (GraphiQL et 3 vues phpMyAdmin, avec 3 catégories et 30 produits).
+
+Les captures sont lisibles et concordent avec les comptes rendus ; aucun identifiant secret n'y est visiblement exposé. Leur inspection vérifie le contenu affiché, mais ne permet pas de certifier a posteriori l'origine des sessions par des moyens cryptographiques.
+
 ## Distinction avec les tests manuels locaux
 
 Des tests manuels sur Windows ont ensuite été réalisés avec SoapUI, XAMPP/MariaDB, GraphiQL, H2 et l'API OpenWeatherMap réelle. Ils sont documentés dans le [guide de démonstration locale](guide-preuves-pratiques.md) et les comptes rendus individuels. Les observations historiques de ce document restent **strictement celles des runners GitHub Actions** ; les succès locaux ultérieurs ne changent pas les résultats CI d'origine.
