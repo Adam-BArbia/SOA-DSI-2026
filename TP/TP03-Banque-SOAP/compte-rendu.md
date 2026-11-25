@@ -52,8 +52,21 @@ Exemple de **structure de requête** (non capture de SoapUI) :
 
 Preuve : [workflow d'intégration réussi](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117), fichiers `wsdl-generated.xml` et `soap-*.xml` dans l'artifact TP3. Environnement **runner Linux distant**, pas SoapUI ni serveur du poste étudiant.
 
-## Vérification graphique facultative
-Démarrer `mvn exec:java`, ouvrir le WSDL local dans SoapUI, puis exécuter les trois opérations pour produire une capture de l'interface. Cette étape n'a pas été observée automatiquement.
+## Vérification manuelle locale — SoapUI
+
+Sous Windows, après compilation Maven réussie (trois tests unitaires) et démarrage de `BanqueServer`, le WSDL `http://localhost:8080/BanqueWS?wsdl` a été importé dans SoapUI 5.10.1.
+
+| Opération locale | Réponse observée | Preuve |
+| --- | --- | --- |
+| `conversionEuroToDinar(100)` | `350.0` | [Capture](preuves/TP03-Banque-Conversion-Success.png) |
+| `getCompte(1)` | Code 1, solde `1100.0` | [Capture](preuves/TP03-Banque-GetCompte-Success.png) |
+| `getComptes()` | Trois comptes : (1, 2000.0), (2, 3500.0), (3, 8700.0) | [Capture](preuves/TP03-Banque-GetComptes-Success.png) |
+
+[Projet SoapUI exporté](preuves/TP03-Banque-SOAP-soapui-project.xml).
+
+**Remarques :** la requête de conversion attend l'élément XML `montant` (et non `arg0`). Le solde du compte 1 retourné par `getCompte(1)` diffère de celui du compte 1 de `getComptes()` : ce comportement s'explique par les données exemples distinctes de l'implémentation ; il ne faut pas interpréter ces méthodes comme deux lectures cohérentes d'un même stockage bancaire.
+
+Ces essais manuels sont distincts de la validation automatisée GitHub Actions.
 
 ## Conclusion
-La publication du WSDL et les trois échanges SOAP de bout en bout sont confirmés par CI. Seule la démonstration spécifique dans SoapUI reste à réaliser si exigée par l'enseignante.
+Le WSDL et les trois opérations sont validés par CI **et** par des appels locaux dans SoapUI. Les captures et l'export du projet permettent de reproduire la démonstration. 
