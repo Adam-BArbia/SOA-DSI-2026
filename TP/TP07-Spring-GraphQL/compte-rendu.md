@@ -1,38 +1,53 @@
 # Compte rendu — TP7 : GraphQL, Spring Boot et MySQL
 
-## Objectif
-Développer une API GraphQL de gestion de produits et de catégories, reliée à une base MySQL et interrogée avec GraphiQL.
+## Objectif et travail demandé
+Créer une API GraphQL pour les produits et catégories, utiliser MySQL et exécuter les requêtes et mutations prévues par l'énoncé. Énoncé : [TP7.pdf](TP7.pdf).
 
-## Environnement
-Java 17, Spring Boot, Spring GraphQL, Spring Data JPA, MySQL via XAMPP, GraphiQL. Sujet : [TP7.pdf](TP7.pdf).
+## Réalisation
+- `Category` : ID Java `Long`, nom, relation `@OneToMany` vers `Product`.
+- `Product` : ID Java `String` UUID, nom, prix, quantité et relation `@ManyToOne`.
+- [schema.graphqls](src/main/resources/graphql/schema.graphqls) : scalaire `ID`, types `Product` et `Category`, entrée `ProductRequest`, quatre queries et trois mutations.
+- `InventoryApplication` initialise trois catégories (`Computer`, `Printer`, `Smartphone`) et dix produits par catégorie si les catégories sont absentes.
 
-## Modèle de données
-- `Category` : identifiant `Long`, nom et relation `@OneToMany` vers les produits.
-- `Product` : identifiant `String` UUID, nom, prix, quantité et relation `@ManyToOne` vers une catégorie.
-- Le schéma [schema.graphqls](src/main/resources/graphql/schema.graphqls) déclare `Product`, `Category`, `ProductRequest`, `Query` et `Mutation`.
+Les choix `Long`, UUID et `ddl-auto=update` assurent des types cohérents et évitent de supprimer les données au redémarrage du serveur. Ils sont explicités dans le [README](README.md).
 
-Les identifiants GraphQL utilisent le scalaire `ID`. Le code conserve des types Java cohérents là où le sujet mélange `Float`, `Long` et `String`.
+## Requêtes et mutations
+```graphql
+query { productList { id name price quantity category { name } } }
+query { categories { id name products { id name } } }
+mutation {
+  saveProduct(product: {name:"PC Demo", price:1299.0, quantity:8, categoryId:"1"}) {
+    id name price quantity
+  }
+}
+```
 
-## Requêtes
-`productList`, `productById`, `categories` et `categoryById` exposent les données et les relations entre catégories et produits.
+La valeur `categoryId:"1"` ci-dessus est **illustrative** ; utiliser l'identifiant réellement renvoyé par `categories`. Après création, réutiliser l'ID UUID retourné pour `productById`, `updateProduct` et `deleteProduct`. Les [12 étapes](graphql/tests.graphql) détaillent cette séquence.
 
-## Mutations
-`saveProduct` ajoute un produit, `updateProduct` modifie ses propriétés et `deleteProduct` le supprime. Les contrôles vérifient notamment l'existence de la catégorie et les valeurs non négatives.
+## Résultats réellement observés
+Le [workflow d'intégration du 25/11/2026](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117) a démarré **MySQL 8 en conteneur** et l'application Spring Boot. Les observations enregistrent :
 
-## Base MySQL et jeu de données
-La configuration utilise `ProduitDB` sur `localhost:3306` par défaut, avec paramètres modifiables via `DB_URL`, `DB_USER` et `DB_PASSWORD`. L'initialisation ajoute trois catégories (`Computer`, `Printer`, `Smartphone`) et dix produits par catégorie lorsque la table des catégories est vide. `ddl-auto=update` évite de supprimer automatiquement les données au redémarrage.
+- Tables `category` et `product` présentes dans la base `ProduitDB`.
+- **3 catégories et 30 produits** initiaux.
+- HTTP 200 pour toutes les **12 opérations GraphQL**.
+- Création, relecture, modification, nouvelle relecture, suppression et vérification du résultat `null` après suppression.
+- Interface `/graphiql` accessible en HTTP 200 (vérification réseau automatique, **sans capture graphique**).
 
-## Exercices et vérification
-Le fichier [graphql/tests.graphql](graphql/tests.graphql) regroupe les **12 étapes** du sujet : listes, relations, recherches par ID, création, contrôle, modification, contrôle, suppression et contrôle.
+Extrait authentique de la trace CI :
 
-Pour la démonstration :
-1. Démarrer MySQL dans XAMPP et créer ou autoriser la création de `ProduitDB`.
-2. Exécuter `mvn clean verify` et `mvn spring-boot:run`.
-3. Ouvrir `http://localhost:8090/graphiql?path=/graphql`.
-4. Exécuter les opérations dans l'ordre, en remplaçant `PRODUCT_ID` par l'identifiant effectivement retourné.
-5. Vérifier dans phpMyAdmin les tables `category` et `product` et leur relation.
+```text
+[PASS] 7 save: GraphQL HTTP 200
+[PASS] 8 verify save: GraphQL HTTP 200
+[PASS] 9 update: GraphQL HTTP 200
+[PASS] 10 verify update: GraphQL HTTP 200
+[PASS] 11 delete: GraphQL HTTP 200
+[PASS] 12 verify delete: GraphQL HTTP 200
+```
 
-Le workflow GitHub Actions du 25/11/2026 confirme la compilation et **un test unitaire réussi** du DTO. Le workflow ne lance pas MySQL et ne constitue donc pas une vérification de l'API contre cette base.
+Les réponses JSON complètes sont dans l'[artifact du TP7](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117/artifacts/15011802048) ; le workflow ne prétend pas avoir utilisé la base XAMPP locale.
+
+## Reproduction sur XAMPP
+Démarrer MySQL dans XAMPP, créer `ProduitDB` si nécessaire, paramétrer `DB_URL`, `DB_USER`, `DB_PASSWORD` suivant l'installation, puis lancer `mvn spring-boot:run` dans ce dossier. Ouvrir `http://localhost:8090/graphiql?path=/graphql`. L'interface phpMyAdmin peut confirmer visuellement les tables et les modifications, mais **aucune capture de celle-ci** n'est présentée comme une preuve CI.
 
 ## Conclusion
-Le service couvre le modèle, les queries, les mutations et les exemples de tests demandés. La démonstration MySQL/GraphiQL permet d'illustrer les échanges réels et les modifications persistées.
+La base MySQL réelle, le schéma GraphQL, les requêtes et les mutations sont validés de bout en bout dans GitHub Actions. La manipulation graphique de GraphiQL/phpMyAdmin reste facultative, sauf demande spécifique de l'enseignante.

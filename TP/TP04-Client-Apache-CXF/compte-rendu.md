@@ -1,24 +1,32 @@
 # Compte rendu — TP4 : Client SOAP Apache CXF
 
-## Objectif
-Générer des classes clientes depuis un WSDL et consommer un service SOAP à partir d'un programme Java.
+## Objectif et travail demandé
+Générer des stubs Java depuis un WSDL avec Apache CXF, démarrer un serveur et consommer les opérations depuis un client.
 
-## Environnement
-Java 23, Maven, Apache CXF. Sujet : [TP4.pdf](TP4.pdf).
+## Réalisation et explication
+1. Le [WSDL autonome](src/main/resources/wsdl/banque.wsdl) définit `getCompte`, `getComptes` et `conversionEuroToDinar`.
+2. Le plugin `cxf-codegen-plugin` exécute `wsdl2java` à la phase `generate-sources`. Les stubs sont générés dans `target/generated-sources/cxf`.
+3. `LocalBanqueFixture` publie son service pédagogique sur `http://localhost:8081/BanqueWS`.
+4. `ClientMain` instancie le client généré et invoque les trois méthodes.
 
-## Réalisation
-1. Le contrat [banque.wsdl](src/main/resources/wsdl/banque.wsdl) décrit les opérations `getCompte`, `getComptes` et `conversionEuroToDinar`.
-2. Le plugin `cxf-codegen-plugin` exécute `wsdl2java` pendant `generate-sources` et place les stubs dans `target/generated-sources/cxf`.
-3. `LocalBanqueFixture` publie un service local de démonstration sur `http://localhost:8081/BanqueWS`.
-4. `ClientMain` crée le proxy généré, configure son endpoint et invoque les trois méthodes.
+Le WSDL et le serveur de ce TP sont **indépendants du TP3** : leur provenance ne doit pas être confondue avec le WSDL généré par Metro au TP3.
 
-## Autonomie du projet
-Le sujet de cours s'appuie sur le service bancaire du TP3. Pour permettre une exécution totalement indépendante, ce dossier contient son **propre WSDL et son propre fournisseur local**. Ce contrat pédagogique ne doit pas être présenté comme une extraction du WSDL du TP3.
+## Résultats et vérification
+GitHub Actions a exécuté le serveur et le client dans le même runner Linux. Le WSDL du serveur a été accessible avec HTTP 200 ; le client a réellement affiché :
 
-## Vérification
-Le workflow GitHub Actions du 25/11/2026 confirme la génération CXF et la compilation Maven. Aucun test JUnit n'est défini pour ce module.
+```text
+CXF fixture WSDL served: HTTP 200
+Compte : code=1, solde=2000.0
+Nombre de comptes : 3
+Résultat de conversion = 350.0
+```
 
-Démonstration locale : exécuter `mvn clean compile`, puis lancer `LocalBanqueFixture` dans une console et `ClientMain` dans une autre (commandes détaillées dans [README.md](README.md)). Le client affiche le compte, la taille de la collection et la conversion (résultat attendu pour 100 EUR : 350.0).
+Ces quatre lignes sont issues des [logs d'exécution réussie](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117) (voir [artifact TP4](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117/artifacts/15011003836)). L'invocation cliente a donc été vérifiée **de bout en bout**, au-delà de la simple compilation.
+
+Un premier essai avait révélé l'absence de `cxf-rt-transports-http-jetty` ; la dépendance a été ajoutée et l'exécution suivante a réussi. Aucune session graphique IntelliJ n'est prétendue.
+
+## Reproduction
+Exécuter `mvn clean compile`, démarrer `LocalBanqueFixture` avec `mvn exec:java -Dexec.mainClass=edu.iset.soa.tp4.LocalBanqueFixture`, puis lancer `ClientMain` dans une seconde console avec la même commande adaptée. Voir [README.md](README.md).
 
 ## Conclusion
-Le projet montre la génération de stubs et leur utilisation dans un client Java. Une sortie console du client connecté au serveur local constitue la preuve pratique la plus simple.
+La génération des stubs, la publication SOAP et la consommation réelle par le client Apache CXF sont vérifiées.
