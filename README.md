@@ -53,3 +53,9 @@ java -cp /tmp/soa-check JavaSyntaxCheck .
 ```
 
 Les contrôles statiques vérifient la syntaxe des fichiers XML/JSON/Java et, si `lxml` est présent, les exemples DTD/XSD du TD1. **Ils ne remplacent pas les tests Maven.** Le workflow [GitHub Actions](.github/workflows/validate.yml) exécute `mvn clean verify` dans chaque projet Maven indépendamment, après publication des fichiers sur GitHub.
+
+## Comptes rendus et preuves d'exécution
+
+Chaque TP contient son [compte rendu](TP/TP01-JAXB/compte-rendu.md) individuel (voir le dossier propre à chaque TP). Le [guide pratique](docs/guide-preuves-pratiques.md) décrit les manipulations sur un poste local ; elles ne sont pas obligatoires pour consulter les preuves distantes.
+
+Le pipeline [Practical runtime evidence](.github/workflows/practical-evidence.yml) exécute des programmes Java, démarre des serveurs HTTP/SOAP et un conteneur MySQL pour les tests GraphQL. Les résultats observés et les liens vers les journaux sont regroupés dans [**Résultats de la vérification distante**](docs/resultats-verification-distante.md). Les services externes inaccessibles et les réponses météo simulées sont distingués des tests réellement réussis.
