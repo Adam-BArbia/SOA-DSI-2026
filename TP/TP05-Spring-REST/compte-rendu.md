@@ -36,10 +36,17 @@ Extrait authentique des observations Jersey dans les logs CI :
 
 Les réponses HAL de Spring Data REST contiennent `_links`, `_embedded` et `page` lorsque ces éléments sont applicables. Voir [workflow réussi](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117) et artifacts des jobs Jersey, Spring MVC et Spring Data REST.
 
-## H2 et reproduction
-Chaque `application.properties` déclare `jdbc:h2:mem:activitydb;DB_CLOSE_DELAY=-1` ; les tests JPA et les échanges HTTP ont fonctionné avec l'initialisation des données. L'accès graphique à la **console H2** n'est pas une preuve vérifiée : l'interface peut être ouverte à `http://localhost:8080/h2-console` avec l'URL JDBC `jdbc:h2:mem:activitydb`, utilisateur `sa` et mot de passe vide, après démarrage du sous-projet.
+## H2 et vérification locale
 
-Les exemples `requetes.http` restent disponibles dans chaque sous-dossier. Les requêtes REST et les statuts ont été validés à distance, sans passer par un navigateur graphique.
+Chaque variante utilise sa propre base H2 en mémoire (`jdbc:h2:mem:activitydb;DB_CLOSE_DELAY=-1`) et s'exécute séparément sur le port 8080.
+
+La variante **Spring MVC** (`spring-controller`) a été démarrée sur Windows ; sa compilation Maven a réussi avec un test unitaire. L'interface `http://localhost:8080/h2-console` a été ouverte avec l'URL JDBC `jdbc:h2:mem:activitydb`, l'utilisateur `sa` et un mot de passe vide.
+
+Les requêtes `SELECT * FROM CATEGORY` et `SELECT * FROM ACTIVITY` ont montré deux catégories (Sport, Culture) et deux activités (Football à Tunis, Théâtre à Sousse).
+
+**Preuve manuelle :** [capture de la console H2](preuves/TP05-H2-Console-Success.png).
+
+Les exemples `requetes.http` restent disponibles dans chaque sous-dossier. Les tests REST/CRUD sur Jersey et Spring MVC ainsi que les lectures HAL sur Spring Data REST décrits plus haut proviennent des **workflows CI**, et non de cette session H2 locale.
 
 ## Conclusion
-Les trois approches REST sont implémentées, indépendantes et validées par de vrais échanges HTTP. Le workflow de Spring Data REST vérifie la lecture, les recherches et HAL, tandis que les CRUD complets sont prouvés sur Jersey et Spring MVC.
+Les trois implémentations REST sont indépendantes et ont été vérifiées par échanges HTTP automatisés. Une vérification graphique supplémentaire de la base H2 de la variante Spring MVC a été effectuée localement.
