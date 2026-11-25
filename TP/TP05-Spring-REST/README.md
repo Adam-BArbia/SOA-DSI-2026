@@ -1,5 +1,7 @@
 # TP5 — Web Service REST avec Spring Boot
 
+> **Compte rendu du TP :** [consulter le document de réalisation, les tests CI et les observations](compte-rendu.md). Les captures d'une manipulation réelle restent à fournir lorsqu'elles ne figurent pas dans le dépôt.
+
 **Sujet original :** [TP5.pdf](TP5.pdf). Comparaison entre trois technologies : **Jersey/JAX-RS**, **Spring MVC REST Controller** et **Spring Data REST**.
 
 Conformément au principe d'autonomie, **chaque sous-projet est un projet Maven complet** avec ses **propres** entités, repositories, données d'initialisation et tests. Aucune dépendance entre eux.

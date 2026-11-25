@@ -27,6 +27,16 @@
 | [TP6](TP/TP06-OpenWeatherMap/) | Consommation d'une API externe avec `RestClient` | Clé API requise pour les appels en direct |
 | [TP7](TP/TP07-Spring-GraphQL/) | GraphQL + GraphiQL + JPA/MySQL | MySQL requis ; port 8090 |
 
+
+## Comptes rendus et preuves de validation
+
+Chaque dossier TP dispose d'un **[compte rendu détaillé](TP/TP01-JAXB/compte-rendu.md)** : objectifs, correspondance avec le PDF, code réalisé, preuves de tests et manipulations à reproduire. Les comptes rendus individuels sont : [TP1](TP/TP01-JAXB/compte-rendu.md) · [TP2](TP/TP02-SOAPUI/compte-rendu.md) · [TP3](TP/TP03-Banque-SOAP/compte-rendu.md) · [TP4](TP/TP04-Client-Apache-CXF/compte-rendu.md) · [TP5](TP/TP05-Spring-REST/compte-rendu.md) · [TP6](TP/TP06-OpenWeatherMap/compte-rendu.md) · [TP7](TP/TP07-Spring-GraphQL/compte-rendu.md).
+
+- [**Matrice de conformité des sujets**](docs/grille-conformite.md) : où trouver chaque réponse et quel niveau de preuve est disponible.
+- [**Registre de validation et preuves**](docs/preuves-validation.md) : lien vers le job CI réel, nombres de tests, limites et vérifications interactives manquantes.
+
+**Important :** le pipeline GitHub Actions a réussi sur le commit de référence, mais aucune capture de séance ni réponse d'un service tiers n'est inventée. Le dépôt distingue code livré, tests automatiques passés et expériences pratiques encore à enregistrer.
+
 ## Évaluation et reproductibilité
 
 1. Ouvrir le dossier de l'exercice voulu ; consulter le **PDF fourni** et le README ou `reponses.md`.

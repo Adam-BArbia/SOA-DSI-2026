@@ -1,5 +1,7 @@
 # TP6 — Consommation d'une API REST externe avec Spring Boot
 
+> **Compte rendu du TP :** [consulter le document de réalisation, les tests CI et les observations](compte-rendu.md). Les captures d'une manipulation réelle restent à fournir lorsqu'elles ne figurent pas dans le dépôt.
+
 [Énoncé](TP6.pdf). Application Spring Boot autonome : elle reproduit localement les éléments Spring Boot utiles du TP5 **sans dépendance sur TP5**, puis expose sa propre API météo.
 
 ## Prérequis

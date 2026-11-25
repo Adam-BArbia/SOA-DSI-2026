@@ -1,5 +1,7 @@
 # TP7 — GraphQL Inventory Service avec Spring Boot et MySQL
 
+> **Compte rendu du TP :** [consulter le document de réalisation, les tests CI et les observations](compte-rendu.md). Les captures d'une manipulation réelle restent à fournir lorsqu'elles ne figurent pas dans le dépôt.
+
 [Énoncé](TP7.pdf). **Projet autonome Java 17**, MySQL et Spring GraphQL. L'application expose **Query, Mutation** et les relations **Product ↔ Category**.
 
 ## Démarrer (XAMPP / MySQL local)

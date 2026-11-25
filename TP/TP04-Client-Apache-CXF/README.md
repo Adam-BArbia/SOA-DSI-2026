@@ -1,5 +1,7 @@
 # TP4 — Consommation SOAP avec Apache CXF
 
+> **Compte rendu du TP :** [consulter le document de réalisation, les tests CI et les observations](compte-rendu.md). Les captures d'une manipulation réelle restent à fournir lorsqu'elles ne figurent pas dans le dépôt.
+
 [Énoncé](TP4.pdf). **Projet Maven/JDK 23 indépendant.** Contrairement au scénario de classe qui présuppose le WSDL du TP3, **ce projet embarque son propre contrat WSDL pédagogique** dans `src/main/resources/wsdl/banque.wsdl`. Il n'importe aucun fichier/code du TP3.
 
 ## Générer les stubs et compiler

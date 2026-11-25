@@ -1,8 +1,10 @@
 # Suivi des livrables et vérification
 
+**Documents complémentaires :** [grille de conformité](grille-conformite.md) · [registre des preuves CI](preuves-validation.md). Les sept rapports pratiques sont dans chaque TP sous `compte-rendu.md`.
+
 Cette matrice sépare **livré dans le dépôt** et **testé en exécution réelle**. Une capture, un log ou un rapport ne doit jamais être fabriqué.
 
-| Sujet | Énoncé PDF | Réponses/code | Validation locale automatisée | Validation manuelle requise |
+| Sujet | Énoncé PDF | Réponses/code | Vérification automatisée (CI) | Validation manuelle requise |
 | --- | --- | --- | --- | --- |
 | TD1–TD5 (6 sujets) | Oui | Oui | XML/graphèmes et vérifications statiques ciblées | Lecture de toutes les réponses |
 | TP1 | Oui | Oui | Contrôle structurel | Maven + JAXB + XJC sur JDK 23 |
@@ -14,7 +16,7 @@ Cette matrice sépare **livré dans le dépôt** et **testé en exécution réel
 | TP7 | Oui | Oui | Schéma GraphQL/XML statique | Maven + MySQL + GraphiQL |
 
 ## Checklist de remise
-- [ ] Exécuter `mvn clean verify` dans chaque projet Maven, avec le JDK attendu
+- [x] Builds Maven et tests existants exécutés en CI sur les 8 projets (voir [preuve du run](preuves-validation.md)) ; [ ] les reproduire au besoin sur le poste local
 - [ ] Suivre les README de chaque TP et enregistrer les captures réelles nécessaires
 - [ ] Vérifier les résultats SOAPUI contre les WSDL actuels
 - [ ] Vérifier GraphiQL sur `localhost:8090/graphiql?path=/graphql`

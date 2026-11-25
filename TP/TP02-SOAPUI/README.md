@@ -1,5 +1,7 @@
 # TP2 — Consommation d'un service Web avec SoapUI
 
+> **Compte rendu du TP :** [consulter le document de réalisation, les tests CI et les observations](compte-rendu.md). Les captures d'une manipulation réelle restent à fournir lorsqu'elles ne figurent pas dans le dépôt.
+
 **Énoncé :** [TP2.pdf](TP2.pdf). Ce TP est une **manipulation de SoapUI**, et non un projet Java. Les requêtes enregistrées sont directement copiables dans l'éditeur XML de SoapUI. Elles ne constituent pas une preuve de communication à distance.
 
 ## Partie 1 — Service calculatrice

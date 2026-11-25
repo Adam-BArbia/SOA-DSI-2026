@@ -1,5 +1,7 @@
 # TP3 — Banque : service SOAP avec JAX-WS
 
+> **Compte rendu du TP :** [consulter le document de réalisation, les tests CI et les observations](compte-rendu.md). Les captures d'une manipulation réelle restent à fournir lorsqu'elles ne figurent pas dans le dépôt.
+
 **Énoncé :** [TP3.pdf](TP3.pdf). Projet Maven autonome **JDK 23**, bibliothèque Metro/Jakarta JAX-WS 4.0.3.
 
 ## Démarrage

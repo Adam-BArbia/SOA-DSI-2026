@@ -1,5 +1,7 @@
 # TP1 — JAXB, XML / XSD (JDK 23)
 
+> **Compte rendu du TP :** [consulter le document de réalisation, les tests CI et les observations](compte-rendu.md). Les captures d'une manipulation réelle restent à fournir lorsqu'elles ne figurent pas dans le dépôt.
+
 **Sujet :** [TP1.pdf](TP1.pdf). Projet Maven autonome.
 
 1. Configurer **JDK 23** et Maven 3.9+ dans IntelliJ IDEA.
