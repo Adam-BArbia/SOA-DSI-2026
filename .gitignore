@@ -17,3 +17,7 @@
 **/test-results/
 **/credentials.json
 !**/.env.example
+
+# Sorties generées par les programmes du TP1 (tests et demonstration)
+TP/TP01-JAXB/message.xml
+TP/TP01-JAXB/message.xsd
