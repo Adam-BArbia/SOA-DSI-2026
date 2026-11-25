@@ -20,7 +20,7 @@
 | TP | Thème | Commande ou outil principal |
 | --- | --- | --- |
 | [TP1](TP/TP01-JAXB/) | JAXB, XML, XSD, XJC | `mvn clean verify` — JDK 23 |
-| [TP2](TP/TP02-SOAPUI/) | Consommation des services SOAP via SoapUI | Importer les projets SoapUI |
+| [TP2](TP/TP02-SOAPUI/) | Consommation des services SOAP via SoapUI | Importer les WSDL publics ; requêtes XML fournies |
 | [TP3](TP/TP03-Banque-SOAP/) | Publier un service SOAP JAX-WS | `mvn clean compile exec:java` — JDK 23 |
 | [TP4](TP/TP04-Client-Apache-CXF/) | Client SOAP Apache CXF et génération de stubs | `mvn clean compile` — JDK 23 |
 | [TP5](TP/TP05-Spring-REST/) | REST avec Jersey, Spring MVC et Spring Data REST | 3 projets Maven **indépendants** |
@@ -34,7 +34,7 @@
 3. Consulter les exemples fournis. Les services externes, clés ou MySQL sont explicitement signalés.
 4. Aucune fonctionnalité ne requiert de référencer un autre dossier du dépôt.
 
-**Note de validation :** le code est fourni comme solution reproductible, mais les tests Maven et les appels à des services tiers doivent être exécutés dans un environnement disposant de Maven, des JDK et de l'accès réseau appropriés. Ne pas confondre exemples préparés et preuves d'exécution réelle.
+**Note de validation :** les tests Maven et les intégrations SOAP/HTTP, REST et MySQL déjà réussis en GitHub Actions sont documentés dans les [résultats de vérification](docs/resultats-verification-distante.md). Les appels aux services SOAP publics du TP2 restent non concluants ; les données météo du TP6 proviennent d'un amont simulé. Aucune session graphique SoapUI/XAMPP/GraphiQL n'est supposée.
 
 ## Divergences ou ambiguïtés des énoncés
 
@@ -56,6 +56,6 @@ Les contrôles statiques vérifient la syntaxe des fichiers XML/JSON/Java et, si
 
 ## Comptes rendus et preuves d'exécution
 
-Chaque TP contient son [compte rendu](TP/TP01-JAXB/compte-rendu.md) individuel (voir le dossier propre à chaque TP). Le [guide pratique](docs/guide-preuves-pratiques.md) décrit les manipulations sur un poste local ; elles ne sont pas obligatoires pour consulter les preuves distantes.
+Chaque TP contient son [compte rendu](TP/TP01-JAXB/compte-rendu.md) individuel (voir le dossier propre à chaque TP). Le [guide pratique](docs/guide-preuves-pratiques.md) fournit des manipulations complémentaires sur un poste local ; les intégrations déjà validées peuvent être évaluées directement par les preuves GitHub Actions.
 
 Le pipeline [Practical runtime evidence](.github/workflows/practical-evidence.yml) exécute des programmes Java, démarre des serveurs HTTP/SOAP et un conteneur MySQL pour les tests GraphQL. Les résultats observés et les liens vers les journaux sont regroupés dans [**Résultats de la vérification distante**](docs/resultats-verification-distante.md). Les services externes inaccessibles et les réponses météo simulées sont distingués des tests réellement réussis.

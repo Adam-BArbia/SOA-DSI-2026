@@ -16,4 +16,4 @@ Conformément au principe d'autonomie, **chaque sous-projet est un projet Maven 
 - Console H2 : `http://localhost:8080/h2-console` ; URL JDBC `jdbc:h2:mem:activitydb`.
 - Vérifier les GET, POST, PUT et DELETE ainsi que les filtres par statut, catégorie, lieu et nom (les endpoints exacts diffèrent selon l'approche).
 
-⚠️ Les requêtes d'exemple sous `requetes.http` ne sont pas exécutées automatiquement : leur réussite doit être vérifiée sur la machine d'évaluation.
+Les fichiers `requetes.http` servent à la reproduction interactive. Des échanges **HTTP réels** sur Jersey, Spring MVC et Spring Data REST ont déjà été validés dans le [workflow pratique](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117). Les CRUD complets sont vérifiés pour Jersey et Spring MVC ; la validation Spring Data REST couvre GET, filtres et HAL (pas son CRUD complet). Voir le [compte rendu](compte-rendu.md).

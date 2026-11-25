@@ -15,6 +15,9 @@ mvn exec:java
 - `getCompte(long code)`: renvoie un compte avec identifiant, solde et date.
 - `getComptes()`: renvoie trois comptes exemples.
 
+## Contrat et vérification pratique
+Le WSDL a été téléchargé et les trois opérations SOAP ont été testées avec réponses HTTP 200 dans le [workflow d'intégration](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117). Les attributs du contrat, les structures JAXB et les résultats sont consignés dans le [compte rendu](compte-rendu.md). L'import dans SoapUI reste une démonstration graphique possible.
+
 ## Validation demandée par le sujet
 Importer le WSDL **généré réellement** dans SoapUI puis identifier : `targetNamespace`, `service`, `port`, `binding`, `portType`, opérations, paramètres, types XML de `Compte` et représentation de `List<Compte>`. Lancer `conversionEuroToDinar(100)`, `getCompte(1)` et `getComptes()`.
 

@@ -1,22 +1,22 @@
 # Guide de démonstration locale — preuves pratiques
 
-Ce guide rassemble les vérifications à réaliser sur un poste Windows avec IntelliJ, Maven, SoapUI et XAMPP. Les comptes rendus sont rangés **dans chaque TP**, sans dépendance entre les projets. Les commandes et les fichiers d'exemple facilitent la reproduction ; une capture n'est conservée comme preuve qu'après exécution effective.
+Ce guide rassemble des manipulations **complémentaires et facultatives**, sauf lorsque l'enseignante exige explicitement des preuves d'interface, sur un poste Windows avec IntelliJ, Maven, SoapUI et XAMPP. Les comptes rendus sont rangés **dans chaque TP**, sans dépendance entre les projets. Les commandes et les fichiers d'exemple facilitent la reproduction ; une capture n'est conservée comme preuve qu'après exécution effective.
 
 ## Ordre conseillé : moins de manipulations
 
 | TP | Manipulation minimale | Preuve à conserver |
 | --- | --- | --- |
-| TP1 — JAXB | Lancer les classes de génération et lecture XML | Console + `message.xml` et `message.xsd` |
+| TP1 — JAXB | Déjà vérifié en CI ; lancement local facultatif | Console + `message.xml` et `message.xsd` |
 | TP2 — SoapUI | Importer les deux WSDL publics et envoyer Add / FullCountryInfo | Une réponse SOAP par service |
 | TP3 — Banque SOAP | Démarrer `BanqueServer`, ouvrir `?wsdl`, lancer les trois opérations dans SoapUI | WSDL + réponse SOAP |
-| TP4 — CXF | Démarrer `LocalBanqueFixture`, puis `ClientMain` | Console du serveur et du client |
-| TP5 — REST | Démarrer séparément Jersey, Spring MVC et Spring Data REST ; envoyer les requêtes fournies | Réponses HTTP et statut de chaque variante |
+| TP4 — CXF | Déjà vérifié de bout en bout en CI | Console du serveur et du client |
+| TP5 — REST | HTTP déjà vérifié en CI ; test graphique facultatif | Réponses HTTP et statut de chaque variante |
 | TP6 — Météo | Configurer la clé OpenWeatherMap, lancer le service et demander Tunis puis Sousse | Deux réponses JSON |
-| TP7 — GraphQL | Démarrer MySQL dans XAMPP, lancer Spring Boot et exécuter les requêtes dans `graphql/tests.graphql` | GraphiQL + tables dans phpMyAdmin |
+| TP7 — GraphQL | MySQL 8 et 12 opérations déjà vérifiés en CI ; interface locale facultative | GraphiQL + tables dans phpMyAdmin |
 
 ## Vérification préalable commune
 
-Dans chaque sous-projet Maven, lancer `mvn clean verify`. Le dépôt dispose déjà d'un workflow GitHub Actions qui valide les compilations et les tests unitaires. Les services SOAP/REST, les bases MySQL et les API externes nécessitent une session d'intégration dédiée.
+Les workflows GitHub Actions ont déjà validé les huit projets Maven et exécuté de vrais échanges SOAP, REST et GraphQL/MySQL ([résultats distants](resultats-verification-distante.md)). Ne refaire `mvn clean verify` que pour une démonstration locale ou après modification. Deux éléments ne sont pas couverts par des réponses fournisseurs réelles : les services publics SOAP du TP2 (échec de connexion) et OpenWeatherMap du TP6 (amont simulé).
 
 ## MySQL / TP7 : procédure courte
 

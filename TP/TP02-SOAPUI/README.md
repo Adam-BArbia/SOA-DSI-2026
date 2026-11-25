@@ -12,11 +12,11 @@
 
 ## Partie 2 — CountryInfoService
 1. Créer un autre projet SoapUI, WSDL : `http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL`.
-2. Inspecter les opérations générées, dont celles concernant les codes ISO et les détails de pays ; les opérations exactes disponibles dépendent du WSDL renvoyé au moment du test.
+2. Inspecter les opérations générées ; le [compte rendu](compte-rendu.md) présente les 21 opérations d'un contrat historique de référence (sans affirmer que le serveur a répondu lors du test du 25/11/2026).
 3. Tester une requête de détail de pays avec `TN` via [`requetes/country-full-info.xml`](requetes/country-full-info.xml).
 4. Comparer les éléments de `<Body>` dans la demande et la réponse et interpréter le nom, la capitale et le code ISO retournés.
 
 ## Preuves à fournir après exécution réelle
-Insérer dans `captures/` les captures **réellement réalisées** : projet importé, requête SOAP et réponse du serveur pour la calculatrice, puis pour CountryInfoService. Aucune capture n'est fabriquée dans ce dépôt.
+Si l'enseignante exige une démonstration spécifique dans SoapUI, insérer dans `captures/` les captures **réellement réalisées** : projet importé et réponse ou erreur authentique de chaque service. Un export XML du projet est facultatif tant qu'il n'est pas explicitement demandé. Aucune capture n'est fabriquée dans ce dépôt.
 
 > Les services distants cités par le cours peuvent être inaccessibles ou changer. En cas d'erreur réseau, l'analyser comme un problème d'environnement distant et conserver les fichiers XML et le WSDL réellement consulté. Ne pas inventer une réponse d'un serveur hors ligne.
