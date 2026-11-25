@@ -2,6 +2,10 @@
 
 **Date :** 25 novembre 2026 · **Méthode :** GitHub Actions, runners Linux éphémères · **Exécutions :** [workflow initial — run 45591780562](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45591780562) et [vérification après correction CXF — run 45592227117](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117).
 
+## Distinction avec les tests manuels locaux
+
+Des tests manuels sur Windows ont ensuite été réalisés avec SoapUI, XAMPP/MariaDB, GraphiQL, H2 et l'API OpenWeatherMap réelle. Ils sont documentés dans le [guide de démonstration locale](guide-preuves-pratiques.md) et les comptes rendus individuels. Les observations historiques de ce document restent **strictement celles des runners GitHub Actions** ; les succès locaux ultérieurs ne changent pas les résultats CI d'origine.
+
 ## Objet
 Ces preuves établissent des exécutions et échanges **réellement observés en CI**. Il s'agit de vérifications distantes automatisées, et non de captures provenant d'IntelliJ, XAMPP, SoapUI ou d'un poste étudiant. Elles n'impliquent aucun téléchargement ou installation sur le PC de l'étudiant.
 

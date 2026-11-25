@@ -23,12 +23,26 @@ Une copie **historique** du contrat, conservée dans un export de projet SoapUI 
 
 Référence contractuelle historique (export SoapUI public, **source externe**, non généré ici) : [CountryInfoWebService-soapui-project.xml](https://github.com/pskreddy9999/SoapUi/blob/master/CountryInfoWebService-soapui-project.xml). La liste exacte est à comparer au WSDL fourni par le serveur lors d'un éventuel nouvel import.
 
-La requête [country-full-info.xml](requetes/country-full-info.xml) soumet `FullCountryInfo` avec `sCountryISOCode=TN`. La structure attendue est `FullCountryInfoResponse/FullCountryInfoResult` de type `tCountryInfo`, comprenant `sISOCode`, `sName`, `sCapitalCity`, `sPhoneCode`, `sContinentCode`, `sCurrencyISOCode`, `sCountryFlag` et `Languages` (liste de `tLanguage`). Les valeurs réelles ne sont **pas** attestées par une réponse distante réussie.
+La requête [country-full-info.xml](requetes/country-full-info.xml) soumet `FullCountryInfo` avec `sCountryISOCode=TN`. La structure attendue est `FullCountryInfoResponse/FullCountryInfoResult` de type `tCountryInfo`, comprenant `sISOCode`, `sName`, `sCapitalCity`, `sPhoneCode`, `sContinentCode`, `sCurrencyISOCode`, `sCountryFlag` et `Languages` (liste de `tLanguage`). Les valeurs ci-dessous ont ensuite été confirmées lors de la session manuelle locale SoapUI.
 
 ## Vérification et résultats
-Des requêtes SOAP **HTTP automatisées, hors SoapUI**, ont été tentées vers les deux services publics depuis GitHub Actions. Les deux connexions ont été réinitialisées (`Connection reset by peer`) : **indisponibilité / absence de preuve de réponse**, non un succès applicatif. Voir [l'exécution distante](https://github.com/Adam-BArbia/SOA-DSI-2026/actions/runs/45592227117) et les [observations](../../docs/resultats-verification-distante.md). Aucun export de projet SoapUI ni capture graphique réelle n'est encore établi.
 
-Pour une démonstration dans SoapUI : **File → New SOAP Project**, importer chaque WSDL, remplacer les corps de requêtes par les fichiers fournis et cliquer sur **Submit** ; conserver le XML et le statut authentiques de chaque réponse (ou erreur). Ne pas présenter le résultat attendu ou une réponse illustrative comme une réponse fournisseur.
+### Exécution automatisée distante (GitHub Actions)
+Les requêtes vers les deux fournisseurs publics ont été tentées en CI, mais les connexions ont été réinitialisées (`Connection reset by peer`). Ce résultat est **non concluant** pour les fournisseurs dans l'environnement du runner, et ne constitue pas une réponse SOAP réussie. Voir les [résultats distants](../../docs/resultats-verification-distante.md).
+
+### Vérification manuelle locale (SoapUI 5.10.1, Windows)
+Les WSDL ont été importés et les deux opérations suivantes ont été exécutées contre les services publics :
+
+| Service | Requête exécutée | Résultat SOAP observé |
+| --- | --- | --- |
+| Calculator | `Add(intA=15, intB=35)` | `AddResult=50` |
+| CountryInfoService | `FullCountryInfo(sCountryISOCode=TN)` | Tunisie, capitale Tunis, indicatif 216, devise TND et langue Arabic |
+
+Les réponses proviennent des appels effectués dans SoapUI, et non des exemples illustratifs de `reponses/`. Les projets SoapUI exportés permettent de retrouver les requêtes.
+
+**Preuves locales :** [Calculator — réponse](preuves/TP02-Calculator-Add-Success.png), [Calculator — projet SoapUI](preuves/TP02-Calculator-soapui-project.xml), [CountryInfoService — réponse](preuves/TP02-CountryInfoService-Success.png) et [CountryInfoService — projet SoapUI](preuves/TP02-CountryInfoService-soapui-project.xml).
+
+Ces résultats locaux complètent sans remplacer les observations CI. Les autres opérations WSDL sont inventoriées, mais n'ont pas toutes été exécutées manuellement.
 
 ## Conclusion
-Les contrats et enveloppes demandés sont analysés et les requêtes sont préparées. Les réponses des fournisseurs publics et la manipulation graphique SoapUI restent non vérifiées.
+L'import des contrats WSDL, la préparation des enveloppes SOAP et l'exécution manuelle des opérations `Add` et `FullCountryInfo` ont été réalisés, avec réponses authentiques et preuves exportées.

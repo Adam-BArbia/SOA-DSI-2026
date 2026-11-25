@@ -1,22 +1,30 @@
 # Suivi des livrables et vérification
 
-Cette matrice sépare **livré dans le dépôt** et **testé en exécution réelle**. Une capture, un log ou un rapport ne doit jamais être fabriqué.
+Ce tableau distingue **contenu livré**, **CI** et **preuves manuelles locales**. « Non attesté » signifie qu'aucune preuve manuelle de cette session n'a été enregistrée, et non que le projet ne fonctionne pas.
 
-| Sujet | Énoncé PDF | Réponses/code | Validation locale automatisée | Validation manuelle requise |
+| Sujet | Énoncé PDF | Réponses/code | Validation CI ou contrôle automatisé | Vérification manuelle locale |
 | --- | --- | --- | --- | --- |
-| TD1–TD5 (6 sujets) | Oui | Oui | XML/graphèmes et vérifications statiques ciblées | Lecture de toutes les réponses |
-| TP1 | Oui | Oui | Contrôle structurel | Maven + JAXB + XJC sur JDK 23 |
-| TP2 | Oui | Oui | Fichiers XML bien formés | SoapUI + services distants |
-| TP3 | Oui | Oui | Contrôle structurel | Maven + SoapUI sur JDK 23 |
-| TP4 | Oui | Oui | Contrôle WSDL/XML | Maven + génération CXF + service local |
-| TP5 | Oui | Oui | Contrôle structurel | Maven + H2 et requêtes HTTP des 3 variantes |
-| TP6 | Oui | Oui | Contrôle structurel | Maven + API key OpenWeatherMap pour le direct |
-| TP7 | Oui | Oui | Schéma GraphQL/XML statique | Maven + MySQL + GraphiQL |
+| TD1–TD5 (6 sujets) | Oui | Oui | Contrôles XML/statiques ciblés | Relecture des réponses à poursuivre |
+| TP1 — JAXB | Oui | Oui | Compilation et exécutions JAXB en CI | Non attestée dans cette session |
+| TP2 — SoapUI | Oui | Oui | Requêtes publiques non concluantes depuis GitHub Actions | **Réalisée** : Calculator et CountryInfoService dans SoapUI ; 4 fichiers |
+| TP3 — Banque SOAP | Oui | Oui | WSDL et trois opérations SOAP en CI | **Réalisée** : Maven, WSDL et 3 opérations SoapUI ; 4 fichiers |
+| TP4 — Apache CXF | Oui | Oui | Publication HTTP et client CXF en CI | Non attestée dans cette session |
+| TP5 — REST | Oui | Oui | Jersey, Spring MVC et Spring Data REST en CI | **Partielle** : Spring MVC + console H2 ; 1 capture |
+| TP6 — OpenWeatherMap | Oui | Oui | Service local testé en CI avec fournisseur simulé | **Réalisée** : OpenWeatherMap réel Tunis/Sousse ; 2 captures |
+| TP7 — GraphQL | Oui | Oui | MySQL 8 et 12 opérations GraphQL en CI | **Réalisée** : XAMPP/MariaDB, CRUD, GraphiQL ; 5 fichiers |
 
-## Checklist de remise
-- [ ] Exécuter `mvn clean verify` dans chaque projet Maven, avec le JDK attendu
-- [ ] Suivre les README de chaque TP et enregistrer les captures réelles nécessaires
-- [ ] Vérifier les résultats SOAPUI contre les WSDL actuels
-- [ ] Vérifier GraphiQL sur `localhost:8090/graphiql?path=/graphql`
-- [ ] Vérifier les paramètres MySQL local et la clé OpenWeatherMap (jamais commiter un secret)
-- [ ] Contrôler la conformité et l'autorisation de redistribution des PDF sur le dépôt public
+Les **16 fichiers de preuve locale** sont classés dans les sous-dossiers `preuves/` de TP2, TP3, TP5, TP6 et TP7 ; les autres fichiers déjà présents dans le dépôt peuvent provenir des vérifications automatisées et restent documentés séparément.
+
+## Points de contrôle pour la remise
+
+- [x] Conserver les réponses SoapUI locales et les exports des deux WSDL publics.
+- [x] Conserver les réponses Banque SOAP observées dans SoapUI.
+- [x] Documenter la console H2 de la variante Spring MVC du TP5.
+- [x] Documenter les appels OpenWeatherMap réels, sans inclure la clé.
+- [x] Documenter le CRUD TP7, MariaDB et GraphiQL avec les captures et JSON.
+- [ ] Vérifier après publication que tous les liens vers `preuves/` fonctionnent.
+- [ ] Vérifier le statut du workflow CI sur le commit final.
+- [ ] Contrôler la conformité et l'autorisation de redistribution des PDF dans ce dépôt public.
+- [ ] Pour un déploiement public éventuel, revoir la sécurité de la version GraphiQL et la configuration des accès.
+
+Voir [guide des preuves](guide-preuves-pratiques.md) et [résultats CI](resultats-verification-distante.md).
